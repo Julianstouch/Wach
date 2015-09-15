@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import visuel.perso.Portrait;
 import visuel.ui.Bandeau;
 import visuel.ui.Buff;
 import visuel.ui.Cadre;
@@ -18,17 +19,26 @@ import visuel.ui.Cadre;
  */
 public class VisuManager {
 
-    private int      largeur = 1270;
-    private int      hauteur = 920;
+    private static VisuManager instance;
+    private int                largeur = 1270;
 
-    private Bandeau  band;
-    private Buff     buff;
-    private Cadre    cadre;
-    private GridPane gPaneL;
-    private GridPane gPaneR;
+    private int                hauteur = 920;
+    private Bandeau            band;
+    private Buff               buff;
+    private Cadre              cadre;
+    private GridPane           gPaneL;
 
-    public VisuManager() {
+    private GridPane           gPaneR;
 
+    private VisuManager() {
+
+    }
+
+    public static VisuManager getInstance() {
+        if (instance == null) {
+            instance = new VisuManager();
+        }
+        return instance;
     }
 
     public void afficherEquipe(final int camp) {
@@ -69,5 +79,9 @@ public class VisuManager {
         cadre = new Cadre(main, largeur, hauteur);
 
         return cadre;
+    }
+
+    public void showStat(final Portrait portrait) {
+        band.afficherStats(portrait);
     }
 }

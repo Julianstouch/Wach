@@ -29,7 +29,7 @@ public class Starting extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
 
-        VisuManager visu = new VisuManager();
+        VisuManager visu = VisuManager.getInstance();
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(visu.preparerVisuel());
         primaryStage.setResizable(false);

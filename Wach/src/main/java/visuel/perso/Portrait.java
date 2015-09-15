@@ -3,14 +3,15 @@ package visuel.perso;
 
 import java.util.Map.Entry;
 
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -23,6 +24,7 @@ import javafx.scene.text.Text;
 import ressource.visuel.Imagier;
 import type.stats.ESB;
 import type.stats.ESC;
+import visuel.VisuManager;
 import chose.concept.StatB;
 import chose.formule.FSC;
 import chose.perso.Membre;
@@ -35,23 +37,26 @@ import chose.perso.Membre;
  */
 public class Portrait extends StackPane {
 
+    private Membre membre;
+
     /**
      * 
      */
-    public Portrait(final Membre membre) {
+    public Portrait(final Membre pMembre) {
 
+        this.membre = pMembre;
         // int ratioX = (membre.getCamp() - 1) * 200 + 50;
         // int ratioY = membre.getIdent() * 50 + 10;
 
         // Text nom = new Text();
         // nom.setText(membre.getNom());
 
-    	Image img = Imagier.getInstance().getRandomMembre();
-    	ImageView tete = new ImageView(img);
-    	if(membre.getCamp() == 2) {
-    	tete.setScaleX(-1);
-    	}
-    	
+        Image img = Imagier.getInstance().getRandomMembre();
+        ImageView tete = new ImageView(img);
+        if (membre.getCamp() == 2) {
+            tete.setScaleX(-1);
+        }
+
         GridPane grid = new GridPane();
         grid.setHgap(4);
         // grid.setVgap(10);
@@ -67,12 +72,18 @@ public class Portrait extends StackPane {
         grid.add(tete, 1, 0, 1, 1);
         grid.getRowConstraints().add(new RowConstraints(20));
 
-        TabPane tabPane = new TabPane();
-        tabPane.getStyleClass().add("floating");
-        //tabPane.getTabs().add(getPaneBase(membre));
-        //tabPane.getTabs().add(getPaneCombat(membre));
-        //grid.add(tabPane, 0, 1, 3, 1);
         this.getChildren().addAll(getRectangle(), grid);
+        Portrait port = this;
+        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public void handle(final MouseEvent event) {
+                event.consume();
+                VisuManager.getInstance().showStat(port);
+            }
+        });
     }
 
     /**
@@ -80,31 +91,7 @@ public class Portrait extends StackPane {
      * 
      * @return
      */
-    public Rectangle getRectangle() {
-        Rectangle r = new Rectangle();
-        r.setX(50);
-        r.setY(50);
-        r.setWidth(120);
-        r.setHeight(120);
-        r.setArcWidth(120);
-        r.setArcHeight(120);
-        r.getStyleClass().add("portrait");
-
-        DropShadow ds1 = new DropShadow();
-        ds1.setOffsetY(2.0f);
-        ds1.setOffsetX(2.0f);
-        ds1.setColor(Color.WHITE);
-        r.setEffect(ds1);
-
-        return r;
-    }
-
-    /**
-     * TODO : write the method's description
-     * 
-     * @return
-     */
-    private Tab getPaneBase(final Membre membre) {
+    public Tab getPaneBase() {
         Tab tab = new Tab();
         tab.setText("Base");
 
@@ -132,7 +119,7 @@ public class Portrait extends StackPane {
      * 
      * @return
      */
-    private Tab getPaneCombat(final Membre membre) {
+    public Tab getPaneCombat() {
         Tab tab = new Tab();
         tab.setText("Combat");
         tab.setClosable(false);
@@ -150,5 +137,29 @@ public class Portrait extends StackPane {
 
         tab.setContent(grid);
         return tab;
+    }
+
+    /**
+     * TODO : write the method's description
+     * 
+     * @return
+     */
+    public Rectangle getRectangle() {
+        Rectangle r = new Rectangle();
+        r.setX(50);
+        r.setY(50);
+        r.setWidth(120);
+        r.setHeight(120);
+        r.setArcWidth(120);
+        r.setArcHeight(120);
+        r.getStyleClass().add("portrait");
+
+        DropShadow ds1 = new DropShadow();
+        ds1.setOffsetY(2.0f);
+        ds1.setOffsetX(2.0f);
+        ds1.setColor(Color.WHITE);
+        r.setEffect(ds1);
+
+        return r;
     }
 }

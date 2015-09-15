@@ -1,14 +1,15 @@
 package visuel;
 
+
+import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import visuel.ui.Bandeau;
 import visuel.ui.Buff;
 import visuel.ui.Cadre;
+
 
 /**
  * TODO Write the class' description
@@ -17,58 +18,56 @@ import visuel.ui.Cadre;
  */
 public class VisuManager {
 
-	private int largeur = 1270;
-	private int hauteur = 920;
+    private int      largeur = 1270;
+    private int      hauteur = 920;
 
-	private Bandeau band;
-	private Buff buff;
-	private Cadre cadre;
-	private GridPane gPaneL;
-	private VBox gPaneR;
+    private Bandeau  band;
+    private Buff     buff;
+    private Cadre    cadre;
+    private GridPane gPaneL;
+    private GridPane gPaneR;
 
-	public VisuManager() {
+    public VisuManager() {
 
-	}
+    }
 
-	public Scene preparerVisuel() {
+    public void afficherEquipe(final int camp) {
 
-		buff = new Buff();
-		band = new Bandeau();
+        for (int i = 0; i < 5; i++) {
+            GridPane memP = new GridPane();
+            // memP.setGridLinesVisible(true);
+            cadre.ajoutMembre(memP, camp);
 
-		BorderPane main = new BorderPane();
-		main.setTop(buff);
-		main.setBottom(band);
+            GridPane.setConstraints(memP, 0, i);
+            if (camp == 1) {
+                gPaneL.getChildren().add(memP);
+            } else {
+                gPaneR.getChildren().add(memP);
+            }
+        }
 
-		gPaneL = new GridPane();
-		//gPaneL.setMinWidth(600);
-		gPaneL.setAlignment(Pos.CENTER_LEFT);
-		//gPaneL.setGridLinesVisible(true);
-		main.setLeft(gPaneL);
+    }
 
-		gPaneR = new VBox();
-		gPaneR.setMinWidth(600);
-		gPaneR.setAlignment(Pos.TOP_RIGHT);
-		//gPaneR.setGridLinesVisible(true);
-		main.setRight(gPaneR);
+    public Scene preparerVisuel() {
 
-		cadre = new Cadre(main, largeur, hauteur);
+        buff = new Buff();
+        band = new Bandeau();
 
-		return cadre;
-	}
+        BorderPane main = new BorderPane();
+        main.setTop(buff);
+        main.setBottom(band);
 
-	public void afficherEquipe(int camp) {
+        gPaneL = new GridPane();
+        gPaneL.setAlignment(Pos.TOP_RIGHT);
+        main.setLeft(gPaneL);
 
-		for (int i = 0; i < 5; i++) {
-			GridPane memP = new GridPane();
-			cadre.ajoutMembre(memP, camp);
-			
-			GridPane.setConstraints(memP, 0, i);
-			if (camp == 1) {
-				gPaneL.getChildren().add(memP);
-			} else {
-				gPaneR.getChildren().add(memP);
-			}
-		}
+        gPaneR = new GridPane();
+        gPaneR.setAlignment(Pos.TOP_RIGHT);
+        gPaneR.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        main.setRight(gPaneR);
 
-	}
+        cadre = new Cadre(main, largeur, hauteur);
+
+        return cadre;
+    }
 }

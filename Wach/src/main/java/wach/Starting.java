@@ -2,14 +2,8 @@ package wach;
 
 
 import javafx.application.Application;
-import javafx.scene.Parent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import visuel.VisuManager;
-import visuel.ui.Bandeau;
-import visuel.ui.Buff;
-import visuel.ui.Cadre;
 
 
 /**
@@ -35,7 +29,7 @@ public class Starting extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
 
-    	VisuManager visu = new VisuManager();
+        VisuManager visu = new VisuManager();
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(visu.preparerVisuel());
         primaryStage.setResizable(false);

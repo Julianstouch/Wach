@@ -1,0 +1,92 @@
+package wach;
+
+
+import javafx.application.Application;
+import javafx.scene.Parent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import visuel.VisuManager;
+import visuel.ui.Bandeau;
+import visuel.ui.Buff;
+import visuel.ui.Cadre;
+
+
+/**
+ * TODO Write the class' description
+ *
+ * @author
+ */
+public class Starting extends Application {
+
+    /**
+     * 
+     */
+    public Starting() {
+    }
+
+    public static void main(final String[] args) {
+        launch(args);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void start(final Stage primaryStage) throws Exception {
+
+    	VisuManager visu = new VisuManager();
+        primaryStage.setTitle("Hello World!");
+        primaryStage.setScene(visu.preparerVisuel());
+        primaryStage.setResizable(false);
+        primaryStage.show();
+
+        visu.afficherEquipe(1);
+        visu.afficherEquipe(2);
+    }
+
+    // interaction
+
+    // Debut - tous subit un random
+    // ESB est fixe
+    // ESE est init par template
+    // ESD et ESC est init par ESB
+    // ESI est random, a tendance vide
+    //
+    // En action - tous subit des influences
+    // Action impact tous sauf ESB
+    // ESB regen ESC et ESD
+    // ESE agit sur ESD
+    //
+    // Déroulement : init / choix des perso
+    // Tour : event, evolution (ESE), (application) récurrent, conséquence,
+    // regen, action,
+    // event, influence, impact, conséquence
+    //
+    //
+    //
+    //
+    //
+    // Tendance : pour les stats, la tendance dis si c'est plutot en progression, diminution ou retour à la normal (en +
+    // ou en -).
+    // Tendance général de l'équipe.
+    //
+    // Succes : quand une action est réalisé, une évalution est faite pour voir si c'est un succes, un echec ou autre.
+    // potentiellement peux se répercuter sur les membres qui ont participé
+    //
+    // * -- Technique / action
+    // *
+    // * -- Aptitudes > modifie la regen des stats,
+    // * peut immuniser contre une stats Discipline Patience
+    // ********************
+    // * -- Classes environnement Météo Lieu
+    // *
+    // * -- Classes mélée Carrossier Facteur Pompier Barman Bibliothécaire Charcutier
+    // * -- Classes entrainants Infirmiere Supporteur de foot Patron Webmaster Secraitaire administratif
+    // * -- Classes opposants Jeune militant de manifestation Controleur des impots Commercial Journaliste Trader
+    // * Télévendeur
+    // * -- Classes terrain Viticulteur Vétérinaire Technicien de surface
+    // *********************
+    // * -- Talents Musique Cuisine StripTease Sportif Geek
+
+}

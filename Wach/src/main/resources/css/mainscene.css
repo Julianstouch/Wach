@@ -1,0 +1,50 @@
+.mainroot {
+     -fx-background-repeat:no-repeat;
+     -fx-background-image: url("../images/fond/fond_1.png");
+}
+
+.portrait {
+    -fx-fill: white;
+    -fx-stroke: black;
+    -fx-stroke-width: 3;
+}
+
+
+.progress-bar > .bar {
+    -fx-background-color: linear-gradient(to bottom, derive(-fx-accent, -7%), derive(-fx-accent, 0%), derive(-fx-accent, -3%), derive(-fx-accent, -9%) );
+    -fx-background-insets: 1 1 2 1;
+    -fx-background-radius: 2;
+    -fx-padding: 0.55em;
+}
+
+.tab {
+    	
+}
+
+.tab .tab-label {
+  -fx-font-size: 10px;
+}
+
+.bttip{
+     -fx-background-radius: 3 3 3 3;
+     -fx-background-color:  linear-gradient(greenyellow   , limegreen );
+}
+
+.dttip{
+     -fx-background-radius: 3 3 3 3;
+     -fx-background-color:  linear-gradient(orange, orangered );
+}
+
+.actionleft {
+     -fx-background-repeat:no-repeat;
+     -fx-background-image: url("../images/fond/action_left.png");
+}
+
+.actioncentre {
+     -fx-background-image: url("../images/fond/action_centre.png");
+}
+
+.actionright {
+     -fx-background-repeat:no-repeat;
+     -fx-background-image: url("../images/fond/action_right.png");
+}

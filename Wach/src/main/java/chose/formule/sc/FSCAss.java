@@ -9,11 +9,11 @@ import chose.perso.Membre;
 
 
 /**
- * Formule pour Concentration
+ * TODO Write the class' description
  *
  * @author
  */
-public class FSCCon implements Function<Membre, Integer> {
+public class FSCAss implements Function<Membre, Integer> {
 
     /**
      * {@inheritDoc}
@@ -21,10 +21,10 @@ public class FSCCon implements Function<Membre, Integer> {
     @Override
     public Integer apply(final Membre mem) {
         int ment = mem.getSB(ESB.MEN);
-        int intel = mem.getSB(ESB.INT);
         int force = mem.getSB(ESB.FOR);
+        int end = mem.getSB(ESB.END);
         int rand = RandomUtil.getRandomIndex(-10, 10);
-        Double tot = new Double((ment * 3) + (intel * 2) - force) + rand;
+        Double tot = new Double((ment * 2) + (end * 2) + (force * 2)) + rand;
         return tot.intValue();
     }
 }

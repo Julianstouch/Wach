@@ -9,11 +9,11 @@ import chose.perso.Membre;
 
 
 /**
- * Formule pour Concentration
+ * TODO Write the class' description
  *
  * @author
  */
-public class FSCCon implements Function<Membre, Integer> {
+public class FSCMor implements Function<Membre, Integer> {
 
     /**
      * {@inheritDoc}

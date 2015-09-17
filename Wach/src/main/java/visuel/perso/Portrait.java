@@ -87,6 +87,15 @@ public class Portrait extends StackPane {
     }
 
     /**
+     * Gets the membre.
+     *
+     * @return the membre.
+     */
+    public Membre getMembre() {
+        return membre;
+    }
+
+    /**
      * TODO : write the method's description
      * 
      * @return

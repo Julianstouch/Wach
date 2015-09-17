@@ -63,11 +63,16 @@ public class Bandeau extends BorderPane {
 
         statbox.getChildren().clear();
         GridPane grid = new GridPane();
-        TabPane tabPane = new TabPane();
-        tabPane.getStyleClass().add("floating");
-        tabPane.getTabs().add(portrait.getPaneBase());
-        tabPane.getTabs().add(portrait.getPaneCombat());
-        grid.add(tabPane, 0, 0);
+        Text nom = new Text(portrait.getMembre().getNom());
+        grid.add(nom, 0, 0);
+        TabPane tabPaneB = new TabPane();
+        tabPaneB.getStyleClass().add("floating");
+        tabPaneB.getTabs().add(portrait.getPaneBase());
+        TabPane tabPaneC = new TabPane();
+        tabPaneC.getStyleClass().add("floating");
+        tabPaneC.getTabs().add(portrait.getPaneCombat());
+        grid.add(tabPaneB, 1, 0);
+        grid.add(tabPaneC, 2, 0);
 
         statbox.getChildren().add(grid);
     }

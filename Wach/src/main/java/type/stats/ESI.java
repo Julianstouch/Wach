@@ -2,7 +2,7 @@ package type.stats;
 
 
 /**
- * Stats interaction (par rapport à chaque autre perso allié ou oopposant)
+ * Stats interaction (par rapport à chaque autre perso allié ou opposant)
  *
  * @author
  */

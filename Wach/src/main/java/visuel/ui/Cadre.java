@@ -13,8 +13,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import ressource.RandomUtil;
-import ressource.template.ETMP;
-import ressource.template.Templier;
+import ressource.membre.Membrier;
+import ressource.membre.Portrier;
 import visuel.perso.Portrait;
 import chose.perso.Membre;
 
@@ -41,16 +41,14 @@ public class Cadre extends Scene {
     }
 
     public void ajoutMembre(final GridPane gPane, final int camp) {
-        Membre first = Templier.getInstance().getNouveauMembre(ETMP.test);
-        first.setCamp(camp);
+
+        Membre unMembre = Membrier.getInstance().getNouveauMembre(camp);
+        Portrait pMem = Portrier.getInstance().getPortrait(unMembre);
 
         Pane blank = new Pane();
         blank.setMinWidth(RandomUtil.getRandomIndex(0, 422));
         GridPane.setConstraints(blank, 0, 0);
-
-        Portrait pMem = new Portrait(first);
         GridPane.setConstraints(pMem, 1, 0);
-
         gPane.getChildren().addAll(pMem, blank);
 
         // Timeline, se repete.

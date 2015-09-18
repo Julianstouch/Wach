@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2015 by VIF (Vignon Informatique France)
- * Project : Wach
- * File : $RCSfile$
- * Created on 16 sept. 2015 by presta2
- */
 package ressource.zip;
 
 
@@ -15,7 +9,7 @@ import java.util.zip.ZipFile;
 /**
  * TODO Write the class' description
  *
- * @author presta2
+ * @author
  */
 public class Zippier {
 

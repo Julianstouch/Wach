@@ -1,6 +1,9 @@
 package ressource.template;
 
 
+import ressource.RandomUtil;
+
+
 /**
  * TODO Write the class' description
  *
@@ -8,7 +11,7 @@ package ressource.template;
  */
 public enum ETMP {
 
-    test("classe");
+    facteur("facteur"), carro("carrossier"), journa("journaliste");
 
     private String nom;
 
@@ -17,6 +20,11 @@ public enum ETMP {
      */
     private ETMP(final String nom) {
         this.nom = nom;
+    }
+
+    public static ETMP getRandom() {
+        int pos = RandomUtil.getRandomIndex(0, ETMP.values().length - 1);
+        return ETMP.values()[pos];
     }
 
     /**

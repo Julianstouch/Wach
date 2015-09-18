@@ -1,11 +1,14 @@
 package visuel;
 
 
+import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import ressource.membre.Portrier;
 import visuel.perso.Portrait;
 import visuel.ui.Bandeau;
 import visuel.ui.Buff;
@@ -77,11 +80,39 @@ public class VisuManager {
         main.setRight(gPaneR);
 
         cadre = new Cadre(main, largeur, hauteur);
+        cadre.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public void handle(final MouseEvent event) {
+                event.consume();
+                gererSelection(null);
+            }
+        });
 
         return cadre;
     }
 
     public void showStat(final Portrait portrait) {
+        this.gererSelection(portrait);
         band.afficherStats(portrait);
+    }
+
+    /**
+     * TODO : write the method's description
+     * 
+     * @param portrait
+     */
+    private void gererSelection(final Portrait portrait) {
+        if (portrait != null) {
+            for (Portrait autre : Portrier.getInstance().getAllPortraitBut(portrait)) {
+                autre.deSelect();
+            }
+            portrait.select();
+        } else {
+            Portrier.getInstance().getAllPortrait().stream().filter(e -> e.deSelect()).count();
+            band.cacherStats();
+        }
     }
 }

@@ -21,9 +21,9 @@ import ressource.RandomUtil;
  */
 public class Textier {
 
-    private static Textier                    instance;
+    private static Textier                   instance;
 
-    private static Map<Integer, List<String>> tousNoms;
+    private static Map<EGENRE, List<String>> tousNoms;
 
     /**
      * 
@@ -35,14 +35,14 @@ public class Textier {
         if (instance == null) {
 
             instance = new Textier();
-            tousNoms = new HashMap<Integer, List<String>>();
+            tousNoms = new HashMap<EGENRE, List<String>>();
             Path path;
             try {
 
-                for (ETXT type : ETXT.values()) {
-                    path = Paths.get(instance.getClass().getResource("/text/noms_" + type.getNum() + ".txt").toURI());
+                for (EGENRE type : EGENRE.values()) {
+                    path = Paths.get(instance.getClass().getResource("/text/noms_" + type.name() + ".txt").toURI());
                     try (Stream<String> lines = Files.lines(path)) {
-                        tousNoms.put(type.getNum(), lines.collect(Collectors.toList()));
+                        tousNoms.put(type, lines.collect(Collectors.toList()));
                     } catch (Exception e) {
                         System.out.println("No file : " + e.getLocalizedMessage());
                     }
@@ -55,9 +55,9 @@ public class Textier {
         return instance;
     }
 
-    public String getNouveauNom(final ETXT eTxt) {
-        int pos = RandomUtil.getRandomIndex(0, tousNoms.get(eTxt.getNum()).size() - 1);
-        return tousNoms.get(eTxt.getNum()).get(pos);
+    public String getNouveauNom(final EGENRE eTxt) {
+        int pos = RandomUtil.getRandomIndex(0, tousNoms.get(eTxt).size() - 1);
+        return tousNoms.get(eTxt).get(pos);
     }
 
 }

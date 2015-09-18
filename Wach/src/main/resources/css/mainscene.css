@@ -9,10 +9,16 @@
     -fx-stroke-width: 3;
 }
 
+.portraitselected {
+    -fx-fill: white;
+    -fx-stroke: red;
+    -fx-stroke-width: 3;
+}
+
 
 .progress-bar > .bar {
     -fx-background-color: linear-gradient(to bottom, derive(-fx-accent, -7%), derive(-fx-accent, 0%), derive(-fx-accent, -3%), derive(-fx-accent, -9%) );
-    -fx-background-insets: 1 1 2 1;
+    -fx-background-insets: 2 2 3 2;
     -fx-background-radius: 2;
     -fx-padding: 0.55em;
 }
@@ -22,7 +28,7 @@
 }
 
 .tab .tab-label {
-  -fx-font-size: 10px;
+  -fx-font-size: 12px;
 }
 
 .bttip{

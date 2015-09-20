@@ -38,7 +38,7 @@ public class Buff extends HBox {
 
         HBox cBox = new HBox();
         cBox.setMinWidth(300);
-        cBox.setStyle("-fx-background-color: #44FF88;");
+//        cBox.setStyle("-fx-background-color: #44FF88;");
         cBox.setAlignment(Pos.CENTER);
         Image buff = Imagier.getInstance().getImage(EIMG.bufftest1);
         ImageView vBuff = new ImageView(buff);

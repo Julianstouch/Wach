@@ -1,12 +1,15 @@
 package chose.perso;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import javafx.scene.image.Image;
+import ressource.RandomUtil;
+import ressource.membre.Membrier;
 import ressource.template.ETERME;
 import ressource.text.EGENRE;
 import ressource.text.Textier;
@@ -19,6 +22,7 @@ import type.stats.ESS;
 import chose.concept.StatB;
 import chose.concept.StatC;
 import chose.concept.StatD;
+import chose.concept.StatI;
 import chose.formule.FSC;
 import chose.formule.FSD;
 
@@ -40,8 +44,9 @@ public class Membre {
     private Map<ESB, StatB>                    statBase;
     private Map<ESC, StatC>                    statCombat;
     private Map<ESD, StatD>                    statDyna;
-    private Map<Membre, List<Map<ESI, StatB>>> statInter;
-    private Map<ESS, StatB>                    statSens;
+    private Map<Membre, Map<ESI, StatI>> statInter;
+    
+	private Map<ESS, StatB>                    statSens;
 
     /**
      * @param propMember
@@ -70,12 +75,27 @@ public class Membre {
         }
 
         FSD fsd = new FSD(this);
-        for (ESD combatDyna : ESD.values()) {
-            statDyna.put(combatDyna, fsd.getStat(combatDyna));
+        for (ESD dynaStat : ESD.values()) {
+            statDyna.put(dynaStat, fsd.getStat(dynaStat));
         }
 
     }
 
+    public void initStatI() {
+    	this.statInter = new HashMap<Membre, Map<ESI,StatI>>();
+    	
+    	for (Membre other : Membrier.getInstance().getAllMembreBut(this)) {
+    		Map<ESI,StatI> listI = new HashMap<ESI,StatI>();
+    		for (ESI otherStat : ESI.values()) {
+    			StatI stat = new StatI();
+                stat.setType(otherStat);
+                stat.setValeur(RandomUtil.getRandomIndex(0, 10));
+    			listI.put(otherStat,stat);
+    		}
+    		statInter.put(other, listI);
+		}
+    }
+    
     /**
      * Gets the camp.
      *
@@ -152,6 +172,10 @@ public class Membre {
         return statDyna;
     }
 
+    public Map<Membre, Map<ESI, StatI>> getStatInter() {
+		return statInter;
+	}
+    
     /**
      * Gets the tete.
      *

@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import ressource.membre.Membrier;
 import ressource.membre.Portrier;
 import visuel.perso.Portrait;
 import visuel.ui.Bandeau;
@@ -91,6 +92,9 @@ public class VisuManager {
             }
         });
 
+        afficherEquipe(1);
+        afficherEquipe(2);
+        Membrier.getInstance().getAllMembre().stream().forEach(e -> e.initStatI());
         return cadre;
     }
 
@@ -111,7 +115,7 @@ public class VisuManager {
             }
             portrait.select();
         } else {
-            Portrier.getInstance().getAllPortrait().stream().filter(e -> e.deSelect()).count();
+            Portrier.getInstance().getAllPortrait().stream().forEach(e -> e.deSelect());
             band.cacherStats();
         }
     }

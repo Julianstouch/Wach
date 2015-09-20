@@ -62,26 +62,30 @@ public class Bandeau extends BorderPane {
         cacherStats();
         GridPane grid = new GridPane();
 
-        TabPane tabPaneI = new TabPane();
-        tabPaneI.getStyleClass().add("floating");
-        tabPaneI.getTabs().add(portrait.getTabInfos());
-
-        TabPane tabPaneB = new TabPane();
-        tabPaneB.getStyleClass().add("floating");
-        tabPaneB.getTabs().add(portrait.getTabBase());
-
-        TabPane tabPaneC = new TabPane();
-        tabPaneC.getStyleClass().add("floating");
-        tabPaneC.getTabs().add(portrait.getTabCombat());
-
-        TabPane tabPaneD = new TabPane();
-        tabPaneD.getStyleClass().add("floating");
-        tabPaneD.getTabs().add(portrait.getTabDyna());
-
-        grid.add(tabPaneI, 0, 0);
-        grid.add(tabPaneB, 1, 0);
-        grid.add(tabPaneC, 2, 0);
-        grid.add(tabPaneD, 3, 0);
+//        TabPane tabPaneI = new TabPane();
+//        tabPaneI.getStyleClass().add("floating");
+//        tabPaneI.getTabs().add(portrait.getTabInfos());
+//
+//        TabPane tabPaneB = new TabPane();
+//        tabPaneB.getStyleClass().add("floating");
+//        tabPaneB.getTabs().add(portrait.getTabBase());
+//
+//        TabPane tabPaneC = new TabPane();
+//        tabPaneC.getStyleClass().add("floating");
+//        tabPaneC.getTabs().add(portrait.getTabCombat());
+//
+//        TabPane tabPaneD = new TabPane();
+//        tabPaneD.getStyleClass().add("floating");
+//        tabPaneD.getTabs().add(portrait.getTabDyna());
+//
+        TabPane tabPaneO = new TabPane();
+        tabPaneO.getStyleClass().add("floating");
+        tabPaneO.getTabs().addAll(portrait.getTabOthers());
+        
+        grid.add(portrait.getTabInfos(), 0, 0);
+        grid.add(portrait.getTabCombat(), 1, 0);
+        grid.add(portrait.getTabDyna(), 2, 0);
+        grid.add(tabPaneO, 3, 0);
 
         statbox.getChildren().add(grid);
     }

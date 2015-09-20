@@ -30,13 +30,12 @@ public class Starting extends Application {
     public void start(final Stage primaryStage) throws Exception {
 
         VisuManager visu = VisuManager.getInstance();
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Welcome to WACH - Where Anyone Can Hurt !");
         primaryStage.setScene(visu.preparerVisuel());
         primaryStage.setResizable(false);
         primaryStage.show();
 
-        visu.afficherEquipe(1);
-        visu.afficherEquipe(2);
+        
     }
 
     // interaction

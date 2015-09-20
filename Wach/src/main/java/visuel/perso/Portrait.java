@@ -1,6 +1,8 @@
 package visuel.perso;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 
 import javafx.event.EventHandler;
@@ -21,14 +23,17 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import ressource.css.CSSier;
+import ressource.membre.Membrier;
 import ressource.tooltip.Tooltipier;
 import type.stats.ESB;
 import type.stats.ESC;
 import type.stats.ESD;
+import type.stats.ESI;
 import visuel.VisuManager;
 import chose.concept.StatB;
 import chose.concept.StatC;
 import chose.concept.StatD;
+import chose.concept.StatI;
 import chose.perso.Membre;
 
 
@@ -43,10 +48,10 @@ public class Portrait extends StackPane {
     private static final String SEP = " : ";
     private Membre              membre;
     private Rectangle           rect;
-    private Tab                 tabInfo;
-    private Tab                 tabBase;
-    private Tab                 tabCombat;
-    private Tab                 tabDyna;
+    private GridPane                 tabInfo;
+    private GridPane                 tabCombat;
+    private GridPane                 tabDyna;
+    private List<Tab> tabOthers;
 
     /**
      * 
@@ -87,13 +92,12 @@ public class Portrait extends StackPane {
             }
         });
 
-        generatePaneBase();
         generatePaneCombat();
         generatePaneDyna();
         generatePaneInfo();
-    }
+    } 
 
-    /**
+	/**
      * TODO : write the method's description
      */
     public Boolean deSelect() {
@@ -137,20 +141,11 @@ public class Portrait extends StackPane {
     }
 
     /**
-     * Gets the tabBase.
-     *
-     * @return the tabBase.
-     */
-    public Tab getTabBase() {
-        return tabBase;
-    }
-
-    /**
      * Gets the tabCombat.
      *
      * @return the tabCombat.
      */
-    public Tab getTabCombat() {
+    public GridPane getTabCombat() {
         return tabCombat;
     }
 
@@ -159,7 +154,7 @@ public class Portrait extends StackPane {
      *
      * @return the tabDyna.
      */
-    public Tab getTabDyna() {
+    public GridPane getTabDyna() {
         return tabDyna;
     }
 
@@ -168,7 +163,7 @@ public class Portrait extends StackPane {
      * 
      * @return
      */
-    public Tab getTabInfos() {
+    public GridPane getTabInfos() {
         return tabInfo;
     }
 
@@ -176,6 +171,9 @@ public class Portrait extends StackPane {
      * 
      */
     public void select() {
+    	if(tabOthers == null)
+    		generatePaneOther();
+    	
         rect.getStyleClass().remove(CSSier.PORTRAIT);
         rect.getStyleClass().add(CSSier.PORTRAITSEL);
     }
@@ -185,100 +183,112 @@ public class Portrait extends StackPane {
      * 
      * @return
      */
-    private void generatePaneBase() {
-        tabBase = new Tab();
-        tabBase.setText("Base");
-        tabBase.setClosable(false);
-        GridPane grid = new GridPane();
-
-        int i = 1;
-        for (Entry<ESB, StatB> entryStat : membre.getStatBase().entrySet()) {
-            Text uneStat = new Text();
-            uneStat.setFont(Font.font("null", FontWeight.MEDIUM, 12));
-            uneStat.setText(entryStat.getKey().getCode());
-            grid.add(uneStat, 0, i);
-
-            ProgressBar pb = new ProgressBar(new Double(entryStat.getValue().getValeur() * 5) / 100);
-            Tooltipier.getInstance().installTooltip(
-                    entryStat.getKey().getCode() + SEP + entryStat.getValue().getValeur(), pb);
-            pb.setMinWidth(120);
-            grid.add(pb, 1, i++, 2, 1);
-        }
-        tabBase.setContent(grid);
-    }
-
-    /**
-     * TODO : write the method's description
-     * 
-     * @return
-     */
     private void generatePaneCombat() {
-        tabCombat = new Tab();
-        tabCombat.setText("Combat");
-        tabCombat.setClosable(false);
-        GridPane grid = new GridPane();
-
+        tabCombat = new GridPane();
+        tabCombat.getColumnConstraints().add(new ColumnConstraints(100));
+        tabCombat.getColumnConstraints().add(new ColumnConstraints(150));
         int i = 1;
         for (Entry<ESC, StatC> entryStat : membre.getStatCombat().entrySet()) {
             Text uneStat = new Text();
             uneStat.setFont(Font.font("null", FontWeight.MEDIUM, 12));
             uneStat.setText(entryStat.getKey().getCode());
-            grid.add(uneStat, 0, i);
+            tabCombat.add(uneStat, 0, i);
 
             ProgressBar pb = new ProgressBar(new Double(entryStat.getValue().getValeur()) / 100);
             Tooltipier.getInstance().installTooltip(
                     entryStat.getKey().getCode() + SEP + entryStat.getValue().getValeur(), pb);
             pb.setMinWidth(120);
-            grid.add(pb, 1, i++, 2, 1);
+            tabCombat.add(pb, 1, i++, 2, 1);
         }
-        tabCombat.setContent(grid);
     }
 
     /**
      * TODO : write the method's description
      */
     private void generatePaneDyna() {
-        tabDyna = new Tab();
-        tabDyna.setText("Dynamique");
-        tabDyna.setClosable(false);
-        GridPane grid = new GridPane();
-
+    	tabDyna = new GridPane();
+    	tabDyna.getColumnConstraints().add(new ColumnConstraints(100));
+    	tabDyna.getColumnConstraints().add(new ColumnConstraints(150));
         int i = 1;
         for (Entry<ESD, StatD> entryStat : membre.getStatDyna().entrySet()) {
             Text uneStat = new Text();
             uneStat.setFont(Font.font("null", FontWeight.MEDIUM, 12));
             uneStat.setText(entryStat.getKey().getCode());
-            grid.add(uneStat, 0, i);
+            tabDyna.add(uneStat, 0, i);
 
             ProgressBar pb = new ProgressBar(new Double(entryStat.getValue().getValeur()) / 100);
             Tooltipier.getInstance().installTooltip(
                     entryStat.getKey().getCode() + SEP + entryStat.getValue().getValeur(), pb);
             pb.setMinWidth(120);
-            grid.add(pb, 1, i++, 2, 1);
+            tabDyna.add(pb, 1, i++, 2, 1);
         }
-        tabDyna.setContent(grid);
     }
 
     private void generatePaneInfo() {
-        tabInfo = new Tab();
-        tabInfo.setText("Info");
-        tabInfo.setClosable(false);
-        GridPane grid = new GridPane();
+        tabInfo = new GridPane();
         Text lNom = new Text("Nom");
         Text lGenre = new Text("Genre");
         Text lMetier = new Text("Job");
         Text nom = new Text(membre.getNom());
         Text genre = new Text(membre.getGenre());
         Text metier = new Text(membre.getMetier());
-        grid.getColumnConstraints().add(new ColumnConstraints(80));
-        grid.getColumnConstraints().add(new ColumnConstraints(140));
-        grid.add(lNom, 0, 0);
-        grid.add(lGenre, 0, 1);
-        grid.add(lMetier, 0, 2);
+        tabInfo.getColumnConstraints().add(new ColumnConstraints(70));
+        tabInfo.getColumnConstraints().add(new ColumnConstraints(150));
+        tabInfo.add(lNom, 0, 0);
+        tabInfo.add(lGenre, 0, 1);
+        tabInfo.add(lMetier, 0, 2);
 
-        grid.add(nom, 1, 0);
-        grid.add(genre, 1, 1);
-        grid.add(metier, 1, 2);
-        tabInfo.setContent(grid);
+        tabInfo.add(nom, 1, 0);
+        tabInfo.add(genre, 1, 1);
+        tabInfo.add(metier, 1, 2);
+        
+        int i = 3;
+        for (Entry<ESB, StatB> entryStat : membre.getStatBase().entrySet()) {
+            Text uneStat = new Text();
+            uneStat.setFont(Font.font("null", FontWeight.MEDIUM, 12));
+            uneStat.setText(entryStat.getKey().getCode());
+            tabInfo.add(uneStat, 0, i);
+
+            ProgressBar pb = new ProgressBar(new Double(entryStat.getValue().getValeur() * 5) / 100);
+            Tooltipier.getInstance().installTooltip(
+                    entryStat.getKey().getCode() + SEP + entryStat.getValue().getValeur(), pb);
+            pb.setMinWidth(120);
+            tabInfo.add(pb, 1, i++, 2, 1);
+        }
     }
+    
+    private void generatePaneOther() {
+    	tabOthers = new ArrayList<Tab>();
+    	List<Membre> listOther = Membrier.getInstance().getAllMembreBut(membre);
+    	
+    	for (Membre oMembre : listOther) {
+    		Tab tab = new Tab();
+    		StringBuilder nom  = new StringBuilder(oMembre.getNom());
+    		tab.setText(nom.length() > 14 ? nom.substring(0, 14) : nom.toString());
+    		tab.setClosable(false);
+    		GridPane grid = new GridPane();
+    		int i = 1;
+    		 for (Entry<ESI, StatI> entryStat : membre.getStatInter().get(oMembre).entrySet()) {
+    	            Text uneStat = new Text();
+    	            uneStat.setFont(Font.font("null", FontWeight.MEDIUM, 12));
+    	            uneStat.setText(entryStat.getKey().getCode());
+    	            grid.add(uneStat, 0, i);
+
+    	            ProgressBar pb = new ProgressBar(new Double(entryStat.getValue().getValeur()) / 100);
+    	            Tooltipier.getInstance().installTooltip(
+    	                    entryStat.getKey().getCode() + SEP + entryStat.getValue().getValeur(), pb);
+    	            pb.setMinWidth(120);
+    	            grid.add(pb, 1, i++, 2, 1);
+    	        }
+    		 tab.setContent(grid);
+    		 tabOthers.add(tab);
+		}
+		
+   	}
+
+
+
+	public List<Tab> getTabOthers() {
+		return tabOthers;
+	}
 }

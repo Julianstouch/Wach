@@ -11,7 +11,7 @@
 
 .portraitselected {
     -fx-fill: white;
-    -fx-stroke: red;
+    -fx-stroke: #15d234;
     -fx-stroke-width: 3;
 }
 

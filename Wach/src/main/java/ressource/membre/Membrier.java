@@ -2,6 +2,7 @@ package ressource.membre;
 
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,17 +26,25 @@ public class Membrier {
 
     private int                  idSuivant;
 
+    private Comparator<Membre> compare;
     /**
      * 
      */
     private Membrier() {
+    	idSuivant = 1;
+        tousMembre = new HashMap<Integer, Membre>();
+    	compare = new Comparator<Membre>() {
+        	@Override
+        	public int compare(Membre mem1, Membre mem2) {
+        		return Integer.compare(mem1.getIdent(), mem2.getIdent());
+        	}
+		};
+    	
     }
 
     public static Membrier getInstance() {
         if (instance == null) {
             instance = new Membrier();
-            instance.idSuivant = 1;
-            instance.tousMembre = new HashMap<Integer, Membre>();
         }
         return instance;
     }
@@ -45,8 +54,8 @@ public class Membrier {
     }
 
     public List<Membre> getAllMembreBut(final Membre courrant) {
-        return tousMembre.values().stream().filter(e -> e.getIdent() != courrant.getIdent())
-                .collect(Collectors.toList());
+        return tousMembre.values().stream().filter(e -> e.getIdent() != courrant.getIdent()).sorted(compare)
+                .collect(Collectors.toList()); 
     }
 
     /**

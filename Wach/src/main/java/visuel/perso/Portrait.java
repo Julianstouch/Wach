@@ -246,6 +246,8 @@ public class Portrait extends StackPane {
         Text metier = new Text(membre.getMetier());
         nom.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         metier.setFont(Font.font("Arial", FontWeight.MEDIUM, FontPosture.ITALIC, 14));
+        String categorie = membre.getCategorie();
+        Tooltipier.getInstance().installTooltip(categorie, metier);
         gridNom.add(nom, 0, 0);
         gridNom.add(metier, 0, 1);
 

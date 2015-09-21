@@ -8,7 +8,7 @@ package ressource.template;
  */
 public enum ETERME {
 
-    GENRE, METIER;
+    GENRE, METIER, CAT;
 
     /**
      * 

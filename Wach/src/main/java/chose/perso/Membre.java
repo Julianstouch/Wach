@@ -8,6 +8,7 @@ import java.util.Properties;
 import javafx.scene.image.Image;
 import ressource.RandomUtil;
 import ressource.membre.Membrier;
+import ressource.template.ECAT;
 import ressource.template.ETERME;
 import ressource.text.EGENRE;
 import ressource.text.Textier;
@@ -34,6 +35,7 @@ public class Membre {
     private int                          ident;
     private int                          camp;
     private String                       metier;
+    private String                       categorie;
     private EGENRE                       genre;
     private String                       nom;
     private Image                        tete;
@@ -50,7 +52,7 @@ public class Membre {
 
         this.metier = propMember.getProperty(ETERME.METIER.toString());
         this.genre = EGENRE.valueOf(propMember.getProperty(ETERME.GENRE.toString()).trim());
-
+        this.categorie = ECAT.valueOf(propMember.getProperty(ETERME.CAT.toString()).trim()).getNom();
         this.nom = Textier.getInstance().getNouveauNom(genre);
         this.tete = Imagier.getInstance().getRandomMembre();
         // stats
@@ -83,6 +85,15 @@ public class Membre {
      */
     public int getCamp() {
         return camp;
+    }
+
+    /**
+     * Gets the categorie.
+     *
+     * @return the categorie.
+     */
+    public String getCategorie() {
+        return categorie;
     }
 
     /**

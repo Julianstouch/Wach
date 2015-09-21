@@ -1,9 +1,7 @@
 package chose.perso;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -18,7 +16,6 @@ import type.stats.ESB;
 import type.stats.ESC;
 import type.stats.ESD;
 import type.stats.ESI;
-import type.stats.ESS;
 import chose.concept.StatB;
 import chose.concept.StatC;
 import chose.concept.StatD;
@@ -34,29 +31,27 @@ import chose.formule.FSD;
  */
 public class Membre {
 
-    private int                                ident;
-    private int                                camp;
-    private String                             metier;
-    private String                             genre;
-    private String                             nom;
-    private Image                              tete;
+    private int                          ident;
+    private int                          camp;
+    private String                       metier;
+    private EGENRE                       genre;
+    private String                       nom;
+    private Image                        tete;
 
-    private Map<ESB, StatB>                    statBase;
-    private Map<ESC, StatC>                    statCombat;
-    private Map<ESD, StatD>                    statDyna;
+    private Map<ESB, StatB>              statBase;
+    private Map<ESC, StatC>              statCombat;
+    private Map<ESD, StatD>              statDyna;
     private Map<Membre, Map<ESI, StatI>> statInter;
-    
-	private Map<ESS, StatB>                    statSens;
 
     /**
      * @param propMember
      */
     public Membre(final Properties propMember) {
 
-        this.metier = propMember.getProperty(ETERME.METIER.name());
-        this.genre = propMember.getProperty(ETERME.GENRE.name());
+        this.metier = propMember.getProperty(ETERME.METIER.toString());
+        this.genre = EGENRE.valueOf(propMember.getProperty(ETERME.GENRE.toString()).trim());
 
-        this.nom = Textier.getInstance().getNouveauNom(EGENRE.valueOf(genre));
+        this.nom = Textier.getInstance().getNouveauNom(genre);
         this.tete = Imagier.getInstance().getRandomMembre();
         // stats
         this.statBase = new HashMap<ESB, StatB>();
@@ -81,21 +76,6 @@ public class Membre {
 
     }
 
-    public void initStatI() {
-    	this.statInter = new HashMap<Membre, Map<ESI,StatI>>();
-    	
-    	for (Membre other : Membrier.getInstance().getAllMembreBut(this)) {
-    		Map<ESI,StatI> listI = new HashMap<ESI,StatI>();
-    		for (ESI otherStat : ESI.values()) {
-    			StatI stat = new StatI();
-                stat.setType(otherStat);
-                stat.setValeur(RandomUtil.getRandomIndex(0, 10));
-    			listI.put(otherStat,stat);
-    		}
-    		statInter.put(other, listI);
-		}
-    }
-    
     /**
      * Gets the camp.
      *
@@ -110,7 +90,7 @@ public class Membre {
      *
      * @return the genre.
      */
-    public String getGenre() {
+    public EGENRE getGenre() {
         return genre;
     }
 
@@ -173,9 +153,9 @@ public class Membre {
     }
 
     public Map<Membre, Map<ESI, StatI>> getStatInter() {
-		return statInter;
-	}
-    
+        return statInter;
+    }
+
     /**
      * Gets the tete.
      *
@@ -183,6 +163,21 @@ public class Membre {
      */
     public Image getTete() {
         return tete;
+    }
+
+    public void initStatI() {
+        this.statInter = new HashMap<Membre, Map<ESI, StatI>>();
+
+        for (Membre other : Membrier.getInstance().getAllMembreBut(this)) {
+            Map<ESI, StatI> listI = new HashMap<ESI, StatI>();
+            for (ESI otherStat : ESI.values()) {
+                StatI stat = new StatI();
+                stat.setType(otherStat);
+                stat.setValeur(RandomUtil.getRandomIndex(0, 10));
+                listI.put(otherStat, stat);
+            }
+            statInter.put(other, listI);
+        }
     }
 
     /**
@@ -201,15 +196,6 @@ public class Membre {
      */
     public void setIdent(final int ident) {
         this.ident = ident;
-    }
-
-    /**
-     * Sets the nom.
-     *
-     * @param nom nom.
-     */
-    public void setNom(final String nom) {
-        this.nom = nom;
     }
 
 }

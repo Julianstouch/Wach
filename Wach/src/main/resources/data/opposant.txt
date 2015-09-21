@@ -1,0 +1,9 @@
+METIER=Jeune militant
+CAT=o
+GENRE=h
+SAN=13
+FOR=13
+SOU=8
+MEN=15
+INT=10
+END=18

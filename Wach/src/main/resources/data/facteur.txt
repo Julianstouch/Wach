@@ -1,5 +1,6 @@
-GENRE=homme
 METIER=Facteur
+CAT=c
+GENRE=h
 SAN=18
 FOR=12
 SOU=14

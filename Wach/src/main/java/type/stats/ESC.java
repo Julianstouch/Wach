@@ -27,7 +27,16 @@ public enum ESC {
     MOR("Moral"),
 
     /** Assurance (connaissance technique perso) */
-    ASS("Assurance");
+    ASS("Assurance"),
+
+    /** Vue */
+    VUE("Vue"),
+
+    /** Ouïe */
+    OUI("Ouïe"),
+
+    /** Equilibire */
+    EQU("Equilibre");
 
     private String code;
 

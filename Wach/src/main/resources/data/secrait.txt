@@ -1,0 +1,9 @@
+METIER=Secraitaire
+CAT=m
+GENRE=f
+SAN=16
+FOR=5
+SOU=9
+MEN=12
+INT=14
+END=13

@@ -11,9 +11,12 @@ import chose.formule.sc.FSCAss;
 import chose.formule.sc.FSCCal;
 import chose.formule.sc.FSCCap;
 import chose.formule.sc.FSCCon;
+import chose.formule.sc.FSCEqu;
 import chose.formule.sc.FSCHab;
 import chose.formule.sc.FSCMor;
+import chose.formule.sc.FSCOui;
 import chose.formule.sc.FSCRap;
+import chose.formule.sc.FSCVue;
 import chose.perso.Membre;
 
 
@@ -39,6 +42,9 @@ public class FSC implements Formule {
         mapF.put(ESC.HAB, new FSCHab());
         mapF.put(ESC.MOR, new FSCMor());
         mapF.put(ESC.RAP, new FSCRap());
+        mapF.put(ESC.VUE, new FSCVue());
+        mapF.put(ESC.OUI, new FSCOui());
+        mapF.put(ESC.EQU, new FSCEqu());
         this.mem = mem;
     }
 

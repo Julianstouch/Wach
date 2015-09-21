@@ -1,0 +1,9 @@
+METIER=Technicien de surface
+CAT=t
+GENRE=h
+SAN=10
+FOR=10
+SOU=10
+MEN=10
+INT=8
+END=12

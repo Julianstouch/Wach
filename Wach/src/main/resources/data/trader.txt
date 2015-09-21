@@ -1,0 +1,9 @@
+METIER=Trader
+CAT=o
+GENRE=f
+SAN=7
+FOR=4
+SOU=4
+MEN=19
+INT=18
+END=19

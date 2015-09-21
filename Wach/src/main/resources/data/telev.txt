@@ -1,0 +1,9 @@
+METIER=Télévendeur
+CAT=o
+GENRE=h
+SAN=8
+FOR=6
+SOU=3
+MEN=20
+INT=9
+END=8

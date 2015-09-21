@@ -20,6 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import ressource.css.CSSier;
@@ -48,10 +49,10 @@ public class Portrait extends StackPane {
     private static final String SEP = " : ";
     private Membre              membre;
     private Rectangle           rect;
-    private GridPane                 tabInfo;
-    private GridPane                 tabCombat;
-    private GridPane                 tabDyna;
-    private List<Tab> tabOthers;
+    private GridPane            tabInfo;
+    private GridPane            tabCombat;
+    private GridPane            tabDyna;
+    private List<Tab>           tabOthers;
 
     /**
      * 
@@ -59,6 +60,7 @@ public class Portrait extends StackPane {
     public Portrait(final Membre pMembre) {
 
         this.membre = pMembre;
+
         ImageView tete = new ImageView(membre.getTete());
         if (membre.getCamp() == 2) {
             tete.setScaleX(-1);
@@ -95,14 +97,14 @@ public class Portrait extends StackPane {
         generatePaneCombat();
         generatePaneDyna();
         generatePaneInfo();
-    } 
+    }
 
-	/**
+    /**
      * TODO : write the method's description
      */
     public Boolean deSelect() {
         rect.getStyleClass().remove(CSSier.PORTRAITSEL);
-        rect.getStyleClass().add(CSSier.PORTRAIT);
+        // rect.getStyleClass().add(CSSier.PORTRAIT);
         return true;
     }
 
@@ -167,15 +169,20 @@ public class Portrait extends StackPane {
         return tabInfo;
     }
 
+    public List<Tab> getTabOthers() {
+        return tabOthers;
+    }
+
     /**
      * 
      */
     public void select() {
-    	if(tabOthers == null)
-    		generatePaneOther();
-    	
-        rect.getStyleClass().remove(CSSier.PORTRAIT);
-        rect.getStyleClass().add(CSSier.PORTRAITSEL);
+        if (tabOthers == null)
+            generatePaneOther();
+
+        if (!rect.getStyleClass().contains(CSSier.PORTRAITSEL)) {
+            rect.getStyleClass().add(CSSier.PORTRAITSEL);
+        }
     }
 
     /**
@@ -206,9 +213,9 @@ public class Portrait extends StackPane {
      * TODO : write the method's description
      */
     private void generatePaneDyna() {
-    	tabDyna = new GridPane();
-    	tabDyna.getColumnConstraints().add(new ColumnConstraints(100));
-    	tabDyna.getColumnConstraints().add(new ColumnConstraints(150));
+        tabDyna = new GridPane();
+        tabDyna.getColumnConstraints().add(new ColumnConstraints(100));
+        tabDyna.getColumnConstraints().add(new ColumnConstraints(150));
         int i = 1;
         for (Entry<ESD, StatD> entryStat : membre.getStatDyna().entrySet()) {
             Text uneStat = new Text();
@@ -226,22 +233,23 @@ public class Portrait extends StackPane {
 
     private void generatePaneInfo() {
         tabInfo = new GridPane();
-        Text lNom = new Text("Nom");
-        Text lGenre = new Text("Genre");
-        Text lMetier = new Text("Job");
-        Text nom = new Text(membre.getNom());
-        Text genre = new Text(membre.getGenre());
-        Text metier = new Text(membre.getMetier());
+        tabInfo.getRowConstraints().add(new RowConstraints(50));
         tabInfo.getColumnConstraints().add(new ColumnConstraints(70));
         tabInfo.getColumnConstraints().add(new ColumnConstraints(150));
-        tabInfo.add(lNom, 0, 0);
-        tabInfo.add(lGenre, 0, 1);
-        tabInfo.add(lMetier, 0, 2);
 
-        tabInfo.add(nom, 1, 0);
-        tabInfo.add(genre, 1, 1);
-        tabInfo.add(metier, 1, 2);
-        
+        GridPane gridNom = new GridPane();
+        ColumnConstraints colCons = new ColumnConstraints(210);
+        colCons.setHalignment(HPos.CENTER);
+        gridNom.getColumnConstraints().add(colCons);
+        String genre = membre.getGenre().getPrefix();
+        Text nom = new Text(genre + membre.getNom());
+        Text metier = new Text(membre.getMetier());
+        nom.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        metier.setFont(Font.font("Arial", FontWeight.MEDIUM, FontPosture.ITALIC, 14));
+        gridNom.add(nom, 0, 0);
+        gridNom.add(metier, 0, 1);
+
+        tabInfo.add(gridNom, 0, 0);
         int i = 3;
         for (Entry<ESB, StatB> entryStat : membre.getStatBase().entrySet()) {
             Text uneStat = new Text();
@@ -256,39 +264,33 @@ public class Portrait extends StackPane {
             tabInfo.add(pb, 1, i++, 2, 1);
         }
     }
-    
+
     private void generatePaneOther() {
-    	tabOthers = new ArrayList<Tab>();
-    	List<Membre> listOther = Membrier.getInstance().getAllMembreBut(membre);
-    	
-    	for (Membre oMembre : listOther) {
-    		Tab tab = new Tab();
-    		StringBuilder nom  = new StringBuilder(oMembre.getNom());
-    		tab.setText(nom.length() > 14 ? nom.substring(0, 14) : nom.toString());
-    		tab.setClosable(false);
-    		GridPane grid = new GridPane();
-    		int i = 1;
-    		 for (Entry<ESI, StatI> entryStat : membre.getStatInter().get(oMembre).entrySet()) {
-    	            Text uneStat = new Text();
-    	            uneStat.setFont(Font.font("null", FontWeight.MEDIUM, 12));
-    	            uneStat.setText(entryStat.getKey().getCode());
-    	            grid.add(uneStat, 0, i);
+        tabOthers = new ArrayList<Tab>();
+        List<Membre> listOther = Membrier.getInstance().getAllMembreBut(membre);
 
-    	            ProgressBar pb = new ProgressBar(new Double(entryStat.getValue().getValeur()) / 100);
-    	            Tooltipier.getInstance().installTooltip(
-    	                    entryStat.getKey().getCode() + SEP + entryStat.getValue().getValeur(), pb);
-    	            pb.setMinWidth(120);
-    	            grid.add(pb, 1, i++, 2, 1);
-    	        }
-    		 tab.setContent(grid);
-    		 tabOthers.add(tab);
-		}
-		
-   	}
+        for (Membre oMembre : listOther) {
+            Tab tab = new Tab();
+            StringBuilder nom = new StringBuilder(oMembre.getNom());
+            tab.setText(nom.length() > 14 ? nom.substring(0, 14) : nom.toString());
+            tab.setClosable(false);
+            GridPane grid = new GridPane();
+            int i = 1;
+            for (Entry<ESI, StatI> entryStat : membre.getStatInter().get(oMembre).entrySet()) {
+                Text uneStat = new Text();
+                uneStat.setFont(Font.font("null", FontWeight.MEDIUM, 12));
+                uneStat.setText(entryStat.getKey().getCode());
+                grid.add(uneStat, 0, i);
 
+                ProgressBar pb = new ProgressBar(new Double(entryStat.getValue().getValeur()) / 100);
+                Tooltipier.getInstance().installTooltip(
+                        entryStat.getKey().getCode() + SEP + entryStat.getValue().getValeur(), pb);
+                pb.setMinWidth(120);
+                grid.add(pb, 1, i++, 2, 1);
+            }
+            tab.setContent(grid);
+            tabOthers.add(tab);
+        }
 
-
-	public List<Tab> getTabOthers() {
-		return tabOthers;
-	}
+    }
 }

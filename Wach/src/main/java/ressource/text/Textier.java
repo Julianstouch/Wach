@@ -40,11 +40,14 @@ public class Textier {
             try {
 
                 for (EGENRE type : EGENRE.values()) {
-                    path = Paths.get(instance.getClass().getResource("/text/noms_" + type.name() + ".txt").toURI());
-                    try (Stream<String> lines = Files.lines(path)) {
-                        tousNoms.put(type, lines.collect(Collectors.toList()));
-                    } catch (Exception e) {
-                        System.out.println("No file : " + e.getLocalizedMessage());
+                    if (type.getLoadFile()) {
+                        path = Paths.get(instance.getClass().getResource("/text/noms_" + type.toString() + ".txt")
+                                .toURI());
+                        try (Stream<String> lines = Files.lines(path)) {
+                            tousNoms.put(type, lines.collect(Collectors.toList()));
+                        } catch (Exception e) {
+                            System.out.println("No file : " + e.getLocalizedMessage());
+                        }
                     }
                 }
             } catch (URISyntaxException e1) {

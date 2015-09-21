@@ -1,0 +1,9 @@
+METIER=Vétérinaire
+CAT=t
+GENRE=f
+SAN=10
+FOR=12
+SOU=9
+MEN=12
+INT=15
+END=10

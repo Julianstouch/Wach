@@ -11,7 +11,9 @@ import ressource.RandomUtil;
  */
 public enum ETMP {
 
-    facteur("facteur"), carro("carrossier"), journa("journaliste");
+    barman(""), biblio(""), carrossier(""), charcu(""), commercial(""), controleur(""), facteur(""), infirm(""), journaliste(
+            ""), opposant(""), patron(""), pompier(""), secrait(""), suppor(""), technicien_s(""), telev(""), trader(""), veterin(
+            ""), viti(""), webmast("");
 
     private String nom;
 

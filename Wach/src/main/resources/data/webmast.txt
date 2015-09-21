@@ -1,0 +1,9 @@
+METIER=Webmaster
+CAT=e
+GENRE=h
+SAN=12
+FOR=6
+SOU=11
+MEN=10
+INT=20
+END=6

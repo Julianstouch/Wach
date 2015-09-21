@@ -2,6 +2,7 @@ package ressource.template;
 
 
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -44,9 +45,10 @@ public class Templier {
     public Properties getTemplate(final ETMP eTmp) {
         Properties propMember = mapTemplate.get(eTmp);
         if (propMember == null) {
-            try (InputStream data = this.getClass().getResourceAsStream("/data/" + eTmp.getNom());) {
+            try (InputStream data = this.getClass().getResourceAsStream("/data/" + eTmp.toString() + ".txt");
+                    InputStreamReader isr = new InputStreamReader(data, "UTF-8");) {
                 propMember = new Properties();
-                propMember.load(data);
+                propMember.load(isr);
                 mapTemplate.put(eTmp, propMember);
             } catch (Exception e) {
                 System.out.println("No template : " + e.getLocalizedMessage());

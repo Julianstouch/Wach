@@ -10,15 +10,43 @@ import ressource.RandomUtil;
  * @author
  */
 public enum EGENRE {
-    homme, femme;
+    /** Homme */
+    h("M. ", true),
+    /** Femme */
+    f("Mme ", true),
+    /** Robot */
+    r("i-", false);
+
+    private String  prefix;
+    private boolean loadFile;
 
     /**
      * 
      */
-    private EGENRE() {
+    private EGENRE(final String prefix, final boolean loadFile) {
+        this.prefix = prefix;
+        this.loadFile = loadFile;
     }
 
     public static EGENRE getOne() {
         return EGENRE.values()[RandomUtil.getRandomIndex(0, EGENRE.values().length - 1)];
+    }
+
+    /**
+     * Gets the loadFile.
+     *
+     * @return the loadFile.
+     */
+    public boolean getLoadFile() {
+        return loadFile;
+    }
+
+    /**
+     * Gets the prefix.
+     *
+     * @return the prefix.
+     */
+    public String getPrefix() {
+        return prefix;
     }
 }

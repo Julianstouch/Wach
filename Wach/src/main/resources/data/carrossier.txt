@@ -1,5 +1,6 @@
-GENRE=homme
 METIER=Carrossier
+CAT=c
+GENRE=h
 SAN=16
 FOR=18
 SOU=6

@@ -1,0 +1,9 @@
+METIER=Supporteur de foot
+CAT=o
+GENRE=h
+SAN=9
+FOR=12
+SOU=7
+MEN=16
+INT=8
+END=16

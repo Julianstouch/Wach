@@ -1,0 +1,9 @@
+METIER=Charcutier
+CAT=c
+GENRE=f
+SAN=15
+FOR=19
+SOU=8
+MEN=18
+INT=6
+END=10

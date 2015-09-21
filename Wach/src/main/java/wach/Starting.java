@@ -35,7 +35,6 @@ public class Starting extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
 
-        
     }
 
     // interaction
@@ -74,8 +73,9 @@ public class Starting extends Application {
     // ********************
     // * -- Classes environnement Météo Lieu
     // *
-    // * -- Classes mélée Carrossier Facteur Pompier Barman Bibliothécaire Charcutier
-    // * -- Classes entrainants Infirmiere Supporteur de foot Patron Webmaster Secraitaire administratif
+    // * -- Classes contact Carrossier Facteur Pompier Barman Bibliothécaire Charcutier
+    // * -- Classes manager Patron Secraitaire administratif
+    // * -- Classes entrainants Infirmiere Supporteur de foot Webmaster
     // * -- Classes opposants Jeune militant de manifestation Controleur des impots Commercial Journaliste Trader
     // * Télévendeur
     // * -- Classes terrain Viticulteur Vétérinaire Technicien de surface

@@ -1,0 +1,9 @@
+METIER=Viticulteur
+CAT=t
+GENRE=h
+SAN=19
+FOR=16
+SOU=6
+MEN=11
+INT=7
+END=18

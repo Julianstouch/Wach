@@ -1,5 +1,6 @@
-GENRE=femme
 METIER=Journaliste
+CAT=o
+GENRE=f
 SAN=12
 FOR=9
 SOU=11

@@ -1,0 +1,9 @@
+METIER=Bibliothécaire
+CAT=c
+GENRE=f
+SAN=12
+FOR=10
+SOU=13
+MEN=18
+INT=19
+END=11

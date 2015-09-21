@@ -1,0 +1,9 @@
+METIER=Controleur des impôts
+CAT=o
+GENRE=f
+SAN=17
+FOR=3
+SOU=2
+MEN=20
+INT=12
+END=18

@@ -1,0 +1,9 @@
+METIER=Infirmière
+CAT=e
+GENRE=f
+SAN=17
+FOR=5
+SOU=13
+MEN=19
+INT=15
+END=9

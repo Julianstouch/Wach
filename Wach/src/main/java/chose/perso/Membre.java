@@ -2,6 +2,7 @@ package chose.perso;
 
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -56,9 +57,9 @@ public class Membre {
         this.nom = Textier.getInstance().getNouveauNom(genre);
         this.tete = Imagier.getInstance().getRandomMembre();
         // stats
-        this.statBase = new HashMap<ESB, StatB>();
-        this.statCombat = new HashMap<ESC, StatC>();
-        this.statDyna = new HashMap<ESD, StatD>();
+        this.statBase = new LinkedHashMap<ESB, StatB>();
+        this.statCombat = new LinkedHashMap<ESC, StatC>();
+        this.statDyna = new LinkedHashMap<ESD, StatD>();
         for (ESB baseStat : ESB.values()) {
             StatB stat = new StatB();
             stat.setType(baseStat);
@@ -177,7 +178,7 @@ public class Membre {
     }
 
     public void initStatI() {
-        this.statInter = new HashMap<Membre, Map<ESI, StatI>>();
+        this.statInter = new LinkedHashMap<Membre, Map<ESI, StatI>>();
 
         for (Membre other : Membrier.getInstance().getAllMembreBut(this)) {
             Map<ESI, StatI> listI = new HashMap<ESI, StatI>();

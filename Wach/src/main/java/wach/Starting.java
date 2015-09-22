@@ -50,15 +50,6 @@ public class Starting extends Application {
     // ESB regen ESC et ESD
     // ESE agit sur ESD
     //
-    // Déroulement : init / choix des perso
-    // Tour : event, evolution (ESE), (application) récurrent, conséquence,
-    // regen, action,
-    // event, influence, impact, conséquence
-    //
-    //
-    //
-    //
-    //
     // Tendance : pour les stats, la tendance dis si c'est plutot en progression, diminution ou retour à la normal (en +
     // ou en -).
     // Tendance général de l'équipe.
@@ -66,19 +57,11 @@ public class Starting extends Application {
     // Succes : quand une action est réalisé, une évalution est faite pour voir si c'est un succes, un echec ou autre.
     // potentiellement peux se répercuter sur les membres qui ont participé
     //
-    // * -- Technique / action
     // *
     // * -- Aptitudes > modifie la regen des stats,
     // * peut immuniser contre une stats Discipline Patience
     // ********************
     // * -- Classes environnement Météo Lieu
-    // *
-    // * -- Classes contact Carrossier Facteur Pompier Barman Bibliothécaire Charcutier
-    // * -- Classes manager Patron Secraitaire administratif
-    // * -- Classes entrainants Infirmiere Supporteur de foot Webmaster
-    // * -- Classes opposants Jeune militant de manifestation Controleur des impots Commercial Journaliste Trader
-    // * Télévendeur
-    // * -- Classes terrain Viticulteur Vétérinaire Technicien de surface
     // *********************
     // * -- Talents Musique Cuisine StripTease Sportif Geek
 

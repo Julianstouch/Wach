@@ -54,3 +54,8 @@
      -fx-background-repeat:no-repeat;
      -fx-background-image: url("../images/fond/action_right.png");
 }
+
+.tourtext {
+	-fx-stroke: black;
+    -fx-stroke-width: 0.5;
+}

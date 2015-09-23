@@ -36,10 +36,18 @@ public class Buff extends HBox {
         VBox rBox = new VBox();
         rBox.setMinWidth(300);
 
-        HBox cBox = new HBox();
-        cBox.setMinWidth(300);
-//        cBox.setStyle("-fx-background-color: #44FF88;");
+        TourManager cBox = new TourManager();
+        cBox.setMinWidth(cBox.getWidthMid() * 1.7);
         cBox.setAlignment(Pos.CENTER);
+
+        bPane.setLeft(lBox);
+        bPane.setRight(rBox);
+        bPane.setCenter(cBox);
+
+        this.getChildren().add(bPane);
+    }
+
+    public void addBuff() {
         Image buff = Imagier.getInstance().getImage(EIMG.bufftest1);
         ImageView vBuff = new ImageView(buff);
 
@@ -50,13 +58,7 @@ public class Buff extends HBox {
 
         Tooltipier.getInstance().installTooltip("Max Debuff", vDeBuff, "dttip");
 
-        cBox.getChildren().addAll(vBuff, vDeBuff);
-
-        bPane.setLeft(lBox);
-        bPane.setRight(rBox);
-        bPane.setCenter(cBox);
-
-        this.getChildren().add(bPane);
+        // cBox.getChildren().addAll(vBuff, vDeBuff);
     }
 
 }

@@ -1,29 +1,28 @@
-package wach;
+package visuel.ui;
 
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Duration;
+import ressource.css.CSSier;
 
 
 /**
@@ -31,10 +30,8 @@ import javafx.util.Duration;
  *
  * @author
  */
-public class TourManager extends Application {
+public class TourManager extends StackPane {
 
-    Stage      stage;
-    Scene      scene;
     Timeline   tlToRight;
     Timeline   tlToMid;
     Timeline   tlToLeft;
@@ -43,40 +40,29 @@ public class TourManager extends Application {
     List<Text> listTour;
     double     heightMid;
     double     widthMid;
+    boolean    started;
 
+    // // général
+    // Event général : météo, crs, chutte d'objet, pompier et jet d'eau
+    // Evolution de l'environnement
+    // Application des récurrents et effets
+    // Conséquence sur les membres
+    // // perso dont c'est le tour
+    // Mise à jour des stats du perso : regen
+    //
+    // -> Attente de l'action du perso : au clic ou action auto
+    //
+    // // exécution de l'action
+    // Event d'action : event d'action générique + suivant le type d'action
+    // Influence sur l'action par les facteurs
+    // Impact de l'action
+    // Conséquence de l'action
     /**
      * 
      */
     public TourManager() {
 
-        // // général
-        // Event général : météo, crs, chutte d'objet, pompier et jet d'eau
-        // Evolution de l'environnement
-        // Application des récurrents et effets
-        // Conséquence sur les membres
-        // // perso dont c'est le tour
-        // Mise à jour des stats du perso : regen
-        //
-        // -> Attente de l'action du perso : au clic ou action auto
-        //
-        // // exécution de l'action
-        // Event d'action : event d'action générique + suivant le type d'action
-        // Influence sur l'action par les facteurs
-        // Impact de l'action
-        // Conséquence de l'action
-
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(final String[] args) {
-        Application.launch(args);
-    }
-
-    @Override
-    public void start(final Stage stage) {
-        stage.show();
+        started = false;
 
         listTour = new ArrayList<Text>();
         Text eventG = new Text(" Evénement  ");
@@ -91,22 +77,10 @@ public class TourManager extends Application {
         Text conseqA = new Text("Conséquences");
         Text fin = new Text("    Fin     ");
 
-        pos = 0;
         listTour.addAll(Arrays.asList(eventG, evol, recur, conseqG, regen, action, eventA, influ, impact, conseqA, fin));
-        listTour.forEach(t -> init(t));
-        widthMid = widthMid - 10;
-        heightMid = heightMid - 8;
-
-        listTour.forEach(t -> initTrans(t));
-        pos = 0;
-        scene = new Scene(new Group(), 600, 300);
-        scene.getStylesheets().add(this.getClass().getResource("/css/mainscene.css").toExternalForm());
-        ObservableList<Node> content = ((Group) scene.getRoot()).getChildren();
-
-        content.addAll(listTour);
-        stage.setScene(scene);
-
-        Duration duration = Duration.millis(10);
+        initAll();
+        started = true;
+        Duration duration = Duration.millis(1);
 
         tlToRight = new Timeline();
         tlToRight.setCycleCount(100);
@@ -156,15 +130,17 @@ public class TourManager extends Application {
         EventHandler<ActionEvent> onFinishedL = new EventHandler<ActionEvent>() {
             @Override
             public void handle(final ActionEvent act) {
-                Text tex = listTour.get(pos - 1);
-                PerspectiveTransform pt = (PerspectiveTransform) tex.getEffect();
-                pt.setUly(pt.getUly() + (heightMid / 3 / 100));
-                pt.setLly(pt.getLly() - (heightMid / 3 / 100));
+                if (pos > 0) {
+                    Text tex = listTour.get(pos - 1);
+                    PerspectiveTransform pt = (PerspectiveTransform) tex.getEffect();
+                    pt.setUly(pt.getUly() + (heightMid / 3 / 100));
+                    pt.setLly(pt.getLly() - (heightMid / 3 / 100));
 
-                pt.setUlx(pt.getUlx() + ((widthMid - (widthMid / 3)) / 100));
-                pt.setLlx(pt.getLlx() + ((widthMid - (widthMid / 3)) / 100));
+                    pt.setUlx(pt.getUlx() + ((widthMid - (widthMid / 3)) / 100));
+                    pt.setLlx(pt.getLlx() + ((widthMid - (widthMid / 3)) / 100));
 
-                tex.setTranslateX(tex.getTranslateX() - (widthMid / 100));
+                    tex.setTranslateX(tex.getTranslateX() - (widthMid / 100));
+                }
             }
         };
         KeyFrame kfl = new KeyFrame(duration, onFinishedL);
@@ -193,53 +169,95 @@ public class TourManager extends Application {
         KeyFrame kfb = new KeyFrame(duration, onFinishedB);
         tlToBye.getKeyFrames().add(kfb);
 
-        scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(final MouseEvent event) {
-                if (pos < listTour.size() - 1 && !tlToBye.getStatus().equals(Status.RUNNING)) {
-                    pos++;
-                    // hide all, sauf les 3 visible
-                    for (int i = 0; i < listTour.size(); i++) {
-                        if (i >= pos - 2 && i <= pos + 1) {
-                            listTour.get(i).setVisible(true);
-                        } else {
-                            listTour.get(i).setVisible(false);
-                        }
-                    }
-                    tlToRight.play();
-                    tlToMid.play();
-                    tlToLeft.play();
-                    tlToBye.play();
-                }
-            };
-        });
-    }
 
-    /**
-     * TODO : write the method's description
-     * 
-     * @param t
-     * @return
-     */
-    private void init(final Text t) {
-        t.setFont(Font.font("null", FontWeight.BOLD, 26));
-        t.setFill(Color.RED);
-        t.setX(0.0f);
-        t.setY(40.0f);
-        t.getStyleClass().add("tourtext");
+                if (!tlToBye.getStatus().equals(Status.RUNNING)) {
+                    if (pos == listTour.size() - 1) {
+                        initAll();
+                    } else {
+                        pos++;
+                        // hide all, sauf les 3 visible
+                        for (int i = 0; i < listTour.size(); i++) {
+                            if (i >= pos - 2 && i <= pos + 1) {
+                                listTour.get(i).setVisible(true);
+                            } else {
+                                listTour.get(i).setVisible(false);
+                            }
+                        }
+                        tlToRight.play();
+                        tlToMid.play();
+                        tlToLeft.play();
+                        tlToBye.play();
+                    }
+                }
+                ;
+            }
+        });
+
+        Rectangle rect = new Rectangle();
+        rect.setX(-2);
+        rect.setY(8);
+        rect.setWidth(widthMid + 3);
+        rect.setHeight(heightMid);
+        rect.setArcWidth(20);
+        rect.setArcHeight(20);
+        rect.getStyleClass().add(CSSier.PORTRAIT);
 
         DropShadow ds1 = new DropShadow();
         ds1.setOffsetY(2.0f);
         ds1.setOffsetX(2.0f);
         ds1.setColor(Color.WHITE);
-        t.setEffect(ds1);
+        rect.setEffect(ds1);
 
-        widthMid = t.getBoundsInParent().getWidth() > widthMid ? t.getBoundsInParent().getWidth() : widthMid;
-        heightMid = t.getBoundsInParent().getHeight();
+        Pane gp = new Pane();
+        gp.getChildren().add(rect);
+        gp.getChildren().addAll(listTour);
+        this.getChildren().addAll(gp);
+    }
+
+    /**
+     * Gets the widthMid.
+     *
+     * @return the widthMid.
+     */
+    public double getWidthMid() {
+        return widthMid;
+    }
+
+    /**
+     * TODO : write the method's description
+     */
+    private void initAll() {
+        Consumer<Text> con = t -> {
+            t.setX(0.0f);
+            t.setY(40.0f);
+
+            if (!started) {
+                t.setFont(Font.font("null", FontWeight.BOLD, 26));
+                t.setFill(Color.RED);
+                t.getStyleClass().add("tourtext");
+                t.setCache(true);
+                widthMid = t.getBoundsInLocal().getWidth() > widthMid ? t.getBoundsInLocal().getWidth() : widthMid;
+                heightMid = t.getBoundsInLocal().getHeight();
+            }
+        };
+
+        listTour.forEach(con);
+        pos = 0;
+        listTour.forEach(this::initTrans);
+        pos = 0;
     }
 
     private void initTrans(final Text t) {
 
-        PerspectiveTransform pt = new PerspectiveTransform();
+        PerspectiveTransform pt;
+        if (!started) {
+            pt = new PerspectiveTransform();
+        } else {
+            pt = (PerspectiveTransform) t.getEffect();
+        }
+
         if (pos == 0) {
             pt.setUlx(t.getX());
             pt.setUly(t.getY() - heightMid);
@@ -253,7 +271,7 @@ public class TourManager extends Application {
             pt.setLrx(t.getX() + widthMid);
             pt.setLry(t.getY());
 
-            t.setTranslateX(100);
+            t.setTranslateX(0);
             t.setVisible(true);
         } else if (pos == 1) {
             pt.setUlx(t.getX());
@@ -265,7 +283,7 @@ public class TourManager extends Application {
             pt.setLly(t.getY());
             pt.setUry(t.getY() - heightMid + (heightMid / 3));
             pt.setLry(t.getY() - heightMid / 3);
-            t.setTranslateX(100 + widthMid);
+            t.setTranslateX(widthMid);
             t.setVisible(true);
         } else {
             pt.setUlx(t.getX() + widthMid / 3);
@@ -277,11 +295,13 @@ public class TourManager extends Application {
             pt.setLly(t.getY() - heightMid / 2);
             pt.setUry(t.getY() - heightMid / 2);
             pt.setLry(t.getY() - heightMid / 2);
-            t.setTranslateX(100 + widthMid);
+            t.setTranslateX(widthMid);
             t.setVisible(false);
         }
 
-        t.setEffect(pt);
+        if (!started) {
+            t.setEffect(pt);
+        }
         pos++;
     }
 

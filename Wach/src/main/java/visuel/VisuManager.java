@@ -12,6 +12,7 @@ import ressource.membre.Membrier;
 import ressource.membre.Portrier;
 import visuel.perso.Portrait;
 import visuel.ui.Bandeau;
+import visuel.ui.BarAction;
 import visuel.ui.Buff;
 import visuel.ui.Cadre;
 
@@ -31,7 +32,7 @@ public class VisuManager {
     private Buff               buff;
     private Cadre              cadre;
     private GridPane           gPaneL;
-
+    private BarAction          actionBox;
     private GridPane           gPaneR;
 
     private VisuManager() {
@@ -66,6 +67,9 @@ public class VisuManager {
 
         buff = new Buff();
         band = new Bandeau();
+        actionBox = new BarAction();
+
+        band.setTop(actionBox);
 
         BorderPane main = new BorderPane();
         main.setTop(buff);

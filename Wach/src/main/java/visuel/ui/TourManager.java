@@ -65,6 +65,7 @@ public class TourManager extends StackPane {
         started = false;
 
         listTour = new ArrayList<Text>();
+        Text debut = new Text("   Début    ");
         Text eventG = new Text(" Evénement  ");
         Text evol = new Text(" Evolution  ");
         Text recur = new Text(" Récurrents ");
@@ -77,7 +78,8 @@ public class TourManager extends StackPane {
         Text conseqA = new Text("Conséquences");
         Text fin = new Text("    Fin     ");
 
-        listTour.addAll(Arrays.asList(eventG, evol, recur, conseqG, regen, action, eventA, influ, impact, conseqA, fin));
+        listTour.addAll(Arrays.asList(debut, eventG, evol, recur, conseqG, regen, action, eventA, influ, impact,
+                conseqA, fin));
         initAll();
         started = true;
         Duration duration = Duration.millis(1);
@@ -189,10 +191,11 @@ public class TourManager extends StackPane {
                         tlToMid.play();
                         tlToLeft.play();
                         tlToBye.play();
+                        executeEtape();
                     }
                 }
-                ;
             }
+
         });
 
         Rectangle rect = new Rectangle();
@@ -223,6 +226,11 @@ public class TourManager extends StackPane {
      */
     public double getWidthMid() {
         return widthMid;
+    }
+
+    private void executeEtape() {
+        // TODO Auto-generated method stub
+
     }
 
     /**
@@ -304,5 +312,4 @@ public class TourManager extends StackPane {
         }
         pos++;
     }
-
 }

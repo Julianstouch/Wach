@@ -106,7 +106,7 @@ public class TourManager extends Application {
         content.addAll(listTour);
         stage.setScene(scene);
 
-        Duration duration = Duration.millis(10);
+        Duration duration = Duration.millis(3);
 
         tlToRight = new Timeline();
         tlToRight.setCycleCount(100);

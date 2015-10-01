@@ -1,11 +1,10 @@
 package chose.formule.sc;
 
 
-import java.util.function.Function;
+import java.util.function.Supplier;
 
-import ressource.RandomUtil;
-import type.stats.ESB;
-import chose.perso.Membre;
+import ressource.Randomier;
+import type.stats.EStat;
 
 
 /**
@@ -13,18 +12,32 @@ import chose.perso.Membre;
  *
  * @author
  */
-public class FSCMor implements Function<Membre, Integer> {
+public class FSCMor extends FSCombat {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Integer apply(final Membre mem) {
-        int ment = mem.getSB(ESB.MEN);
-        int intel = mem.getSB(ESB.INT);
-        int force = mem.getSB(ESB.FOR);
-        int rand = RandomUtil.getRandomIndex(-10, 10);
-        Double tot = new Double((ment * 3) + (intel * 2) - force) + rand;
-        return tot.intValue();
+    protected Supplier<Integer> prepareInitValue() {
+        return new Supplier<Integer>() {
+            @Override
+            public Integer get() {
+                int ment = getProprio().getStat(EStat.MEN).getValeur();
+                int intel = getProprio().getStat(EStat.INT).getValeur();
+                int force = getProprio().getStat(EStat.FOR).getValeur();
+                int rand = Randomier.getRandomIndex(-10, 10);
+                Double tot = new Double((ment * 3) + (intel * 2) - force) + rand;
+                return tot.intValue();
+            }
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Supplier<Double> prepareRegen() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

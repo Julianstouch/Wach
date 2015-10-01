@@ -8,11 +8,11 @@ import type.stats.EStat;
 
 
 /**
- * TODO Write the class' description
+ * Formule pour Concentration
  *
  * @author
  */
-public class FSCVue extends FSCombat {
+public class FSCFoc extends FSCombat {
 
     /**
      * {@inheritDoc}

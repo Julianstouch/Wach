@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import ressource.RandomUtil;
+import ressource.Randomier;
 import ressource.membre.Membrier;
 import ressource.membre.Portrier;
 import visuel.perso.Portrait;
@@ -36,7 +36,7 @@ public class Cadre extends Scene {
         super(parent, sizeX, sizeY);
         this.getStylesheets().add(this.getClass().getResource("/css/mainscene.css").toExternalForm());
         this.getRoot().getStyleClass().add("battleground");
-        int imageFond = RandomUtil.getRandomIndex(1, 5);
+        int imageFond = Randomier.getRandomIndex(1, 5);
         this.getRoot().setStyle("-fx-background-image: url(/images/fond/fond_" + imageFond + ".png);");
     }
 
@@ -46,7 +46,7 @@ public class Cadre extends Scene {
         Portrait pMem = Portrier.getInstance().getPortrait(unMembre);
 
         Pane blank = new Pane();
-        blank.setMinWidth(RandomUtil.getRandomIndex(0, 422));
+        blank.setMinWidth(Randomier.getRandomIndex(0, 422));
         GridPane.setConstraints(blank, 0, 0);
         GridPane.setConstraints(pMem, 1, 0);
         gPane.getChildren().addAll(pMem, blank);
@@ -56,7 +56,7 @@ public class Cadre extends Scene {
         timeline.setCycleCount(Timeline.INDEFINITE);
 
         // action tout les x
-        int randomDuration = RandomUtil.getRandomIndex(2000, 10000);
+        int randomDuration = Randomier.getRandomIndex(2000, 10000);
         Duration duration = Duration.millis(randomDuration);
 
         // action a faire
@@ -65,7 +65,7 @@ public class Cadre extends Scene {
             public void handle(final ActionEvent t) {
                 // recup coordonnées, actuelle et nouvelle
                 double actuelWidth = blank.getMinWidth();
-                double newWidth = RandomUtil.getRandomIndex(0, 422);
+                double newWidth = Randomier.getRandomIndex(0, 422);
                 // ratio de deplacer en 100 unités
                 double ratio100 = (newWidth - actuelWidth) / 100;
                 // nouvelle animation, s'execute 100 fois pour 100 unités

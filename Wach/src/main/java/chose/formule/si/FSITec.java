@@ -1,9 +1,8 @@
-package chose.formule.sc;
+package chose.formule.si;
 
 
 import java.util.function.Supplier;
 
-import ressource.Randomier;
 import type.stats.EStat;
 
 
@@ -12,7 +11,7 @@ import type.stats.EStat;
  *
  * @author
  */
-public class FSCVue extends FSCombat {
+public class FSITec extends FSInter {
 
     /**
      * {@inheritDoc}
@@ -23,10 +22,10 @@ public class FSCVue extends FSCombat {
             @Override
             public Integer get() {
                 int ment = getProprio().getStat(EStat.MEN).getValeur();
-                int intel = getProprio().getStat(EStat.INT).getValeur();
                 int force = getProprio().getStat(EStat.FOR).getValeur();
-                int rand = Randomier.getRandomIndex(-10, 10);
-                Double tot = new Double((ment * 3) + (intel * 2) - force) + rand;
+                int end = getProprio().getStat(EStat.END).getValeur();
+                int rand = getRandomIndex(-10, 10);
+                Double tot = new Double((ment * 2) + (end * 2) + (force * 2)) + rand;
                 return tot.intValue();
             }
         };
@@ -40,4 +39,5 @@ public class FSCVue extends FSCombat {
         // TODO Auto-generated method stub
         return null;
     }
+
 }

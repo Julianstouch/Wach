@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import ressource.RandomUtil;
+import ressource.Randomier;
 
 
 /**
@@ -59,7 +59,7 @@ public class Textier {
     }
 
     public String getNouveauNom(final EGENRE eTxt) {
-        int pos = RandomUtil.getRandomIndex(0, tousNoms.get(eTxt).size() - 1);
+        int pos = Randomier.getRandomIndex(0, tousNoms.get(eTxt).size() - 1);
         return tousNoms.get(eTxt).get(pos);
     }
 

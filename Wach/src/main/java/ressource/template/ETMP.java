@@ -1,7 +1,7 @@
 package ressource.template;
 
 
-import ressource.RandomUtil;
+import ressource.Randomier;
 
 
 /**
@@ -25,7 +25,7 @@ public enum ETMP {
     }
 
     public static ETMP getRandom() {
-        int pos = RandomUtil.getRandomIndex(0, ETMP.values().length - 1);
+        int pos = Randomier.getRandomIndex(0, ETMP.values().length - 1);
         return ETMP.values()[pos];
     }
 

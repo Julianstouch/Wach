@@ -3,7 +3,6 @@ package visuel.perso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -26,15 +25,8 @@ import javafx.scene.text.Text;
 import ressource.css.CSSier;
 import ressource.membre.Membrier;
 import ressource.tooltip.Tooltipier;
-import type.stats.ESB;
-import type.stats.ESC;
-import type.stats.ESD;
-import type.stats.ESI;
 import visuel.VisuManager;
-import chose.concept.StatB;
-import chose.concept.StatC;
-import chose.concept.StatD;
-import chose.concept.StatI;
+import chose.concept.Stat;
 import chose.perso.Membre;
 
 
@@ -47,6 +39,7 @@ public class Portrait extends StackPane {
 
     /** SEP. */
     private static final String SEP = " : ";
+    private static final String ON  = "/";
     private Membre              membre;
     private Rectangle           rect;
     private GridPane            tabInfo;
@@ -104,7 +97,6 @@ public class Portrait extends StackPane {
      */
     public Boolean deSelect() {
         rect.getStyleClass().remove(CSSier.PORTRAITSEL);
-        // rect.getStyleClass().add(CSSier.PORTRAIT);
         return true;
     }
 
@@ -124,19 +116,12 @@ public class Portrait extends StackPane {
      */
     public Rectangle getRectangle() {
         if (rect == null) {
-            rect = new Rectangle();
-            rect.setX(50);
-            rect.setY(50);
-            rect.setWidth(120);
-            rect.setHeight(120);
+            rect = new Rectangle(50, 50, 120, 120);
             rect.setArcWidth(120);
             rect.setArcHeight(120);
             rect.getStyleClass().add(CSSier.PORTRAIT);
 
-            DropShadow ds1 = new DropShadow();
-            ds1.setOffsetY(2.0f);
-            ds1.setOffsetX(2.0f);
-            ds1.setColor(Color.WHITE);
+            DropShadow ds1 = new DropShadow(10.0, 2.0, 2.0, Color.WHITE);
             rect.setEffect(ds1);
         }
         return rect;
@@ -187,6 +172,25 @@ public class Portrait extends StackPane {
 
     /**
      * TODO : write the method's description
+     */
+    private void generatePane(final List<Stat> listStat, final GridPane tab) {
+        int i = 1;
+        for (Stat stat : listStat) {
+            Text uneStat = new Text();
+            uneStat.setFont(Font.font("null", FontWeight.MEDIUM, 12));
+            uneStat.setText(stat.getType().getCode());
+            tab.add(uneStat, 0, i);
+
+            ProgressBar pb = new ProgressBar(new Double(stat.getValeurRatio()) / 100);
+            Tooltipier.getInstance().installTooltip(
+                    stat.getType().getCode() + SEP + stat.getValeur() + ON + stat.getMax(), pb);
+            pb.setMinWidth(120);
+            tab.add(pb, 1, i++, 2, 1);
+        }
+    }
+
+    /**
+     * TODO : write the method's description
      * 
      * @return
      */
@@ -194,19 +198,7 @@ public class Portrait extends StackPane {
         tabCombat = new GridPane();
         tabCombat.getColumnConstraints().add(new ColumnConstraints(100));
         tabCombat.getColumnConstraints().add(new ColumnConstraints(150));
-        int i = 1;
-        for (Entry<ESC, StatC> entryStat : membre.getStatCombat().entrySet()) {
-            Text uneStat = new Text();
-            uneStat.setFont(Font.font("null", FontWeight.MEDIUM, 12));
-            uneStat.setText(entryStat.getKey().getCode());
-            tabCombat.add(uneStat, 0, i);
-
-            ProgressBar pb = new ProgressBar(new Double(entryStat.getValue().getValeur()) / 100);
-            Tooltipier.getInstance().installTooltip(
-                    entryStat.getKey().getCode() + SEP + entryStat.getValue().getValeur(), pb);
-            pb.setMinWidth(120);
-            tabCombat.add(pb, 1, i++, 2, 1);
-        }
+        generatePane(membre.getStatCombat(), tabCombat);
     }
 
     /**
@@ -216,19 +208,7 @@ public class Portrait extends StackPane {
         tabDyna = new GridPane();
         tabDyna.getColumnConstraints().add(new ColumnConstraints(100));
         tabDyna.getColumnConstraints().add(new ColumnConstraints(150));
-        int i = 1;
-        for (Entry<ESD, StatD> entryStat : membre.getStatDyna().entrySet()) {
-            Text uneStat = new Text();
-            uneStat.setFont(Font.font("null", FontWeight.MEDIUM, 12));
-            uneStat.setText(entryStat.getKey().getCode());
-            tabDyna.add(uneStat, 0, i);
-
-            ProgressBar pb = new ProgressBar(new Double(entryStat.getValue().getValeur()) / 100);
-            Tooltipier.getInstance().installTooltip(
-                    entryStat.getKey().getCode() + SEP + entryStat.getValue().getValeur(), pb);
-            pb.setMinWidth(120);
-            tabDyna.add(pb, 1, i++, 2, 1);
-        }
+        generatePane(membre.getStatDyna(), tabDyna);
     }
 
     private void generatePaneInfo() {
@@ -252,19 +232,8 @@ public class Portrait extends StackPane {
         gridNom.add(metier, 0, 1);
 
         tabInfo.add(gridNom, 0, 0);
-        int i = 3;
-        for (Entry<ESB, StatB> entryStat : membre.getStatBase().entrySet()) {
-            Text uneStat = new Text();
-            uneStat.setFont(Font.font("null", FontWeight.MEDIUM, 12));
-            uneStat.setText(entryStat.getKey().getCode());
-            tabInfo.add(uneStat, 0, i);
-
-            ProgressBar pb = new ProgressBar(new Double(entryStat.getValue().getValeur() * 5) / 100);
-            Tooltipier.getInstance().installTooltip(
-                    entryStat.getKey().getCode() + SEP + entryStat.getValue().getValeur(), pb);
-            pb.setMinWidth(120);
-            tabInfo.add(pb, 1, i++, 2, 1);
-        }
+        // TODO : i = 3
+        generatePane(membre.getStatBase(), tabInfo);
     }
 
     private void generatePaneOther() {
@@ -277,19 +246,7 @@ public class Portrait extends StackPane {
             tab.setText(nom.length() > 14 ? nom.substring(0, 14) : nom.toString());
             tab.setClosable(false);
             GridPane grid = new GridPane();
-            int i = 1;
-            for (Entry<ESI, StatI> entryStat : membre.getStatInter().get(oMembre).entrySet()) {
-                Text uneStat = new Text();
-                uneStat.setFont(Font.font("null", FontWeight.MEDIUM, 12));
-                uneStat.setText(entryStat.getKey().getCode());
-                grid.add(uneStat, 0, i);
-
-                ProgressBar pb = new ProgressBar(new Double(entryStat.getValue().getValeur()) / 100);
-                Tooltipier.getInstance().installTooltip(
-                        entryStat.getKey().getCode() + SEP + entryStat.getValue().getValeur(), pb);
-                pb.setMinWidth(120);
-                grid.add(pb, 1, i++, 2, 1);
-            }
+            generatePane(membre.getStatInter(oMembre), grid);
             tab.setContent(grid);
             tabOthers.add(tab);
         }

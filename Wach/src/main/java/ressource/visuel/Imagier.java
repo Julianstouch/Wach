@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import ressource.RandomUtil;
+import ressource.Randomier;
 import javafx.scene.image.Image;
 
 
@@ -53,7 +53,7 @@ public class Imagier {
     }
     
     public Image getRandomMembre() {
-    	int ran = RandomUtil.getRandomIndex(1, 29);
+    	int ran = Randomier.getRandomIndex(1, 29);
     	StringBuilder nomC = new StringBuilder(EIMG.membrerandom.getNom());
     	if(ran < 10) {
     		nomC.append("00"+ran+".png");

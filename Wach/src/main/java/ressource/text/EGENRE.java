@@ -1,7 +1,7 @@
 package ressource.text;
 
 
-import ressource.RandomUtil;
+import ressource.Randomier;
 
 
 /**
@@ -29,7 +29,7 @@ public enum EGENRE {
     }
 
     public static EGENRE getOne() {
-        return EGENRE.values()[RandomUtil.getRandomIndex(0, EGENRE.values().length - 1)];
+        return EGENRE.values()[Randomier.getRandomIndex(0, EGENRE.values().length - 1)];
     }
 
     /**

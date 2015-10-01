@@ -1,29 +1,21 @@
 package chose.perso;
 
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import javafx.scene.image.Image;
-import ressource.RandomUtil;
 import ressource.membre.Membrier;
 import ressource.template.ECAT;
 import ressource.template.ETERME;
 import ressource.text.EGENRE;
 import ressource.text.Textier;
 import ressource.visuel.Imagier;
-import type.stats.ESB;
-import type.stats.ESC;
-import type.stats.ESD;
-import type.stats.ESI;
-import chose.concept.StatB;
-import chose.concept.StatC;
-import chose.concept.StatD;
-import chose.concept.StatI;
-import chose.formule.FSC;
-import chose.formule.FSD;
+import type.stats.EStat;
+import chose.concept.Stat;
 
 
 /**
@@ -33,18 +25,15 @@ import chose.formule.FSD;
  */
 public class Membre {
 
-    private int                          ident;
-    private int                          camp;
-    private String                       metier;
-    private String                       categorie;
-    private EGENRE                       genre;
-    private String                       nom;
-    private Image                        tete;
+    private int        ident;
+    private int        camp;
+    private String     metier;
+    private String     categorie;
+    private EGENRE     genre;
+    private String     nom;
+    private Image      tete;
 
-    private Map<ESB, StatB>              statBase;
-    private Map<ESC, StatC>              statCombat;
-    private Map<ESD, StatD>              statDyna;
-    private Map<Membre, Map<ESI, StatI>> statInter;
+    private List<Stat> stats;
 
     /**
      * @param propMember
@@ -56,25 +45,22 @@ public class Membre {
         this.categorie = ECAT.valueOf(propMember.getProperty(ETERME.CAT.toString()).trim()).getNom();
         this.nom = Textier.getInstance().getNouveauNom(genre);
         this.tete = Imagier.getInstance().getRandomMembre();
-        // stats
-        this.statBase = new LinkedHashMap<ESB, StatB>();
-        this.statCombat = new LinkedHashMap<ESC, StatC>();
-        this.statDyna = new LinkedHashMap<ESD, StatD>();
-        for (ESB baseStat : ESB.values()) {
-            StatB stat = new StatB();
-            stat.setType(baseStat);
-            stat.setValeur(Integer.valueOf(propMember.getProperty(baseStat.name())));
-            statBase.put(baseStat, stat);
+        this.stats = new ArrayList<Stat>();
+
+        for (EStat baseStat : EStat.ESB) {
+            String val = propMember.getProperty(baseStat.name());
+            Stat stat = new Stat(baseStat, this, Integer.valueOf(val));
+            stats.add(stat);
         }
 
-        FSC fsc = new FSC(this);
-        for (ESC combatStat : ESC.values()) {
-            statCombat.put(combatStat, fsc.getStat(combatStat));
+        for (EStat combatStat : EStat.ESC) {
+            Stat stat = new Stat(combatStat, this);
+            stats.add(stat);
         }
 
-        FSD fsd = new FSD(this);
-        for (ESD dynaStat : ESD.values()) {
-            statDyna.put(dynaStat, fsd.getStat(dynaStat));
+        for (EStat dynaStat : EStat.ESD) {
+            Stat stat = new Stat(dynaStat, this);
+            stats.add(stat);
         }
 
     }
@@ -133,8 +119,14 @@ public class Membre {
         return nom;
     }
 
-    public int getSB(final ESB typeSB) {
-        return getStatBase().get(typeSB).getValeur();
+    /**
+     * Gets the statBase.
+     *
+     * @return the statBase.
+     */
+    public Stat getStat(final EStat statCherche) {
+        Optional<Stat> theStat = stats.stream().filter(e -> statCherche.equals(e.getType())).findFirst();
+        return theStat.get();
     }
 
     /**
@@ -142,8 +134,8 @@ public class Membre {
      *
      * @return the statBase.
      */
-    public Map<ESB, StatB> getStatBase() {
-        return statBase;
+    public List<Stat> getStatBase() {
+        return stats.stream().filter(e -> EStat.ESB.contains(e.getType())).sorted().collect(Collectors.toList());
     }
 
     /**
@@ -151,8 +143,8 @@ public class Membre {
      *
      * @return the statCombat.
      */
-    public Map<ESC, StatC> getStatCombat() {
-        return statCombat;
+    public List<Stat> getStatCombat() {
+        return stats.stream().filter(e -> EStat.ESC.contains(e.getType())).sorted().collect(Collectors.toList());
     }
 
     /**
@@ -160,12 +152,17 @@ public class Membre {
      *
      * @return the statDyna.
      */
-    public Map<ESD, StatD> getStatDyna() {
-        return statDyna;
+    public List<Stat> getStatDyna() {
+        return stats.stream().filter(e -> EStat.ESD.contains(e.getType())).sorted().collect(Collectors.toList());
     }
 
-    public Map<Membre, Map<ESI, StatI>> getStatInter() {
-        return statInter;
+    public List<Stat> getStatInter() {
+        return stats.stream().filter(e -> EStat.ESI.contains(e.getType())).sorted().collect(Collectors.toList());
+    }
+
+    public List<Stat> getStatInter(final Membre cible) {
+        return stats.stream().filter(e -> EStat.ESI.contains(e.getType()) && e.getCible().equals(cible)).sorted()
+                .collect(Collectors.toList());
     }
 
     /**
@@ -178,17 +175,12 @@ public class Membre {
     }
 
     public void initStatI() {
-        this.statInter = new LinkedHashMap<Membre, Map<ESI, StatI>>();
-
         for (Membre other : Membrier.getInstance().getAllMembreBut(this)) {
-            Map<ESI, StatI> listI = new HashMap<ESI, StatI>();
-            for (ESI otherStat : ESI.values()) {
-                StatI stat = new StatI();
-                stat.setType(otherStat);
-                stat.setValeur(RandomUtil.getRandomIndex(0, 10));
-                listI.put(otherStat, stat);
+            for (EStat otherStat : EStat.ESI) {
+                Stat stat = new Stat(otherStat, this, other);
+                // stat.setValeur(RandomUtil.getRandomIndex(0, 10));
+                stats.add(stat);
             }
-            statInter.put(other, listI);
         }
     }
 
@@ -209,5 +201,4 @@ public class Membre {
     public void setIdent(final int ident) {
         this.ident = ident;
     }
-
 }

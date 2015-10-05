@@ -29,7 +29,7 @@ public enum EGENRE {
     }
 
     public static EGENRE getOne() {
-        return EGENRE.values()[Randomier.getRandomIndex(0, EGENRE.values().length - 1)];
+        return EGENRE.values()[Randomier.getRandom(0, EGENRE.values().length - 1)];
     }
 
     /**

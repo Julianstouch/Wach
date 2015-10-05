@@ -25,13 +25,8 @@ public class FSBase extends AbsFormule {
      * {@inheritDoc}
      */
     @Override
-    protected Supplier<Integer> prepareInitValue() {
-        return new Supplier<Integer>() {
-            @Override
-            public Integer get() {
-                return 0;
-            }
-        };
+    protected Integer prepareInitValue() {
+        return 0;
     }
 
     /**

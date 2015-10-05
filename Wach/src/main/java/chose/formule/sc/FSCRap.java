@@ -3,7 +3,6 @@ package chose.formule.sc;
 
 import java.util.function.Supplier;
 
-import ressource.Randomier;
 import type.stats.EStat;
 
 
@@ -18,18 +17,8 @@ public class FSCRap extends FSCombat {
      * {@inheritDoc}
      */
     @Override
-    protected Supplier<Integer> prepareInitValue() {
-        return new Supplier<Integer>() {
-            @Override
-            public Integer get() {
-                int ment = getProprio().getStat(EStat.MEN).getValeur();
-                int intel = getProprio().getStat(EStat.INT).getValeur();
-                int force = getProprio().getStat(EStat.FOR).getValeur();
-                int rand = Randomier.getRandomIndex(-10, 10);
-                Double tot = new Double((ment * 3) + (intel * 2) - force) + rand;
-                return tot.intValue();
-            }
-        };
+    protected Integer prepareInitValue() {
+        return getPon().p(50, 1).p(getS(EStat.SOU), 0).p(getS(EStat.SAN), 0).total();
     }
 
     /**

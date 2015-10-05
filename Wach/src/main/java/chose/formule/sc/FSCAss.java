@@ -7,7 +7,7 @@ import type.stats.EStat;
 
 
 /**
- * TODO Write the class' description
+ * Formule calcul Assurance
  *
  * @author
  */
@@ -17,18 +17,8 @@ public class FSCAss extends FSCombat {
      * {@inheritDoc}
      */
     @Override
-    protected Supplier<Integer> prepareInitValue() {
-        return new Supplier<Integer>() {
-            @Override
-            public Integer get() {
-                int ment = getProprio().getStat(EStat.MEN).getValeur();
-                int force = getProprio().getStat(EStat.FOR).getValeur();
-                int end = getProprio().getStat(EStat.END).getValeur();
-                int rand = getRandomIndex(-10, 10);
-                Double tot = new Double((ment * 2) + (end * 2) + (force * 2)) + rand;
-                return tot.intValue();
-            }
-        };
+    protected Integer prepareInitValue() {
+        return getPon().p(getS(EStat.MEN), 3).p(getS(EStat.FOR), 3).p(getS(EStat.END), 1).total(4) + getRandomSC();
     }
 
     /**

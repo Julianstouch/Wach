@@ -25,7 +25,7 @@ public enum ETMP {
     }
 
     public static ETMP getRandom() {
-        int pos = Randomier.getRandomIndex(0, ETMP.values().length - 1);
+        int pos = Randomier.getRandom(0, ETMP.values().length - 1);
         return ETMP.values()[pos];
     }
 

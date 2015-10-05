@@ -59,7 +59,7 @@ public class Textier {
     }
 
     public String getNouveauNom(final EGENRE eTxt) {
-        int pos = Randomier.getRandomIndex(0, tousNoms.get(eTxt).size() - 1);
+        int pos = Randomier.getRandom(0, tousNoms.get(eTxt).size() - 1);
         return tousNoms.get(eTxt).get(pos);
     }
 

@@ -4,6 +4,7 @@ package chose.formule;
 import java.util.function.Supplier;
 
 import ressource.Randomier;
+import type.stats.EStat;
 import chose.perso.Membre;
 
 
@@ -14,30 +15,33 @@ import chose.perso.Membre;
  */
 public abstract class AbsFormule extends Randomier implements Formule {
 
-    private Membre            mem;
+    private Membre           mem;
 
-    private Supplier<Double>  regen;
+    private Supplier<Double> regen;
 
-    private Supplier<Integer> initValue;
+    private Integer          initValue;
 
-    private Integer           valeur;
+    private Integer          valeur;
 
-    private Integer           valeurInitiale;
+    private Integer          valeurInitiale;
 
-    private Integer           tendance;
+    private Integer          tendance;
 
-    private Double            ratio;
+    private Double           ratio;
 
     /**
      * 
      */
     public AbsFormule() {
         regen = prepareRegen();
-        initValue = prepareInitValue();
     }
 
     public Integer getMax() {
         return getMaxValue();
+    }
+
+    public Ponderateur getPon() {
+        return new Ponderateur();
     }
 
     public Membre getProprio() {
@@ -46,6 +50,10 @@ public abstract class AbsFormule extends Randomier implements Formule {
 
     public Double getRegen() {
         return regen.get();
+    }
+
+    public Integer getS(final EStat type) {
+        return getProprio().getStat(type).getValeur();
     }
 
     /**
@@ -73,7 +81,7 @@ public abstract class AbsFormule extends Randomier implements Formule {
     public void init(final Membre mem, final Integer initVal) {
         this.mem = mem;
         if (initVal == null) {
-            this.valeurInitiale = initValue.get();
+            this.valeurInitiale = prepareInitValue();
         } else {
             this.valeurInitiale = initVal;
         }
@@ -85,7 +93,7 @@ public abstract class AbsFormule extends Randomier implements Formule {
 
     // protected abstract Integer getMinValue();
 
-    protected abstract Supplier<Integer> prepareInitValue();
+    protected abstract Integer prepareInitValue();
 
     protected abstract Supplier<Double> prepareRegen();
 

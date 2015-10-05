@@ -53,7 +53,7 @@ public class Imagier {
     }
     
     public Image getRandomMembre() {
-    	int ran = Randomier.getRandomIndex(1, 29);
+    	int ran = Randomier.getRandom(1, 29);
     	StringBuilder nomC = new StringBuilder(EIMG.membrerandom.getNom());
     	if(ran < 10) {
     		nomC.append("00"+ran+".png");

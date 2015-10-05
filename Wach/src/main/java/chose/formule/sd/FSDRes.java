@@ -3,8 +3,6 @@ package chose.formule.sd;
 
 import java.util.function.Supplier;
 
-import type.stats.EStat;
-
 
 /**
  * TODO Write the class' description
@@ -17,18 +15,8 @@ public class FSDRes extends FSDyna {
      * {@inheritDoc}
      */
     @Override
-    protected Supplier<Integer> prepareInitValue() {
-        return new Supplier<Integer>() {
-            @Override
-            public Integer get() {
-                int ment = getProprio().getStat(EStat.MEN).getValeur();
-                int force = getProprio().getStat(EStat.FOR).getValeur();
-                int end = getProprio().getStat(EStat.END).getValeur();
-                int rand = getRandomIndex(-10, 10);
-                Double tot = new Double((ment * 2) + (end * 2) + (force * 2)) + rand;
-                return tot.intValue();
-            }
-        };
+    protected Integer prepareInitValue() {
+        return getPon().p(getRandomPourcent(50, 50 + getRandomSC(), 1, 90), 1).total() + getRandomSC();
     }
 
     /**

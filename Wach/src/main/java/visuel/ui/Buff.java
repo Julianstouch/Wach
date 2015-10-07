@@ -36,7 +36,7 @@ public class Buff extends HBox {
         VBox rBox = new VBox();
         rBox.setMinWidth(300);
 
-        TourManager cBox = new TourManager();
+        Derouleur cBox = new Derouleur();
         cBox.setMinWidth(cBox.getWidthMid() * 1.7);
         cBox.setAlignment(Pos.CENTER);
 

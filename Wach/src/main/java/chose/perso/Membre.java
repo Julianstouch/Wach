@@ -15,6 +15,7 @@ import ressource.text.EGENRE;
 import ressource.text.Textier;
 import ressource.visuel.Imagier;
 import type.stats.EStat;
+import visuel.perso.Portrait;
 import chose.concept.Stat;
 
 
@@ -33,13 +34,19 @@ public class Membre {
     private String     nom;
     private Image      tete;
 
+    private Portrait   sonPortrait;
+
     private List<Stat> stats;
 
     /**
      * @param propMember
+     * @param idSuivant
+     * @param camp
      */
-    public Membre(final Properties propMember) {
+    public Membre(final Properties propMember, final int camp, final int idSuivant) {
 
+        this.ident = idSuivant;
+        this.camp = camp;
         this.metier = propMember.getProperty(ETERME.METIER.toString());
         this.genre = EGENRE.valueOf(propMember.getProperty(ETERME.GENRE.toString()).trim());
         this.categorie = ECAT.valueOf(propMember.getProperty(ETERME.CAT.toString()).trim()).getNom();
@@ -63,6 +70,7 @@ public class Membre {
             stats.add(stat);
         }
 
+        sonPortrait = new Portrait(this);
     }
 
     /**
@@ -117,6 +125,15 @@ public class Membre {
      */
     public String getNom() {
         return nom;
+    }
+
+    /**
+     * Gets the sonPortrait.
+     *
+     * @return the sonPortrait.
+     */
+    public Portrait getSonPortrait() {
+        return sonPortrait;
     }
 
     /**

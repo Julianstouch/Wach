@@ -3,7 +3,8 @@ package wach;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import visuel.VisuManager;
+import processier.tour.TourManager;
+import processier.visu.VisuManager;
 
 
 /**
@@ -33,6 +34,8 @@ public class Starting extends Application {
         primaryStage.setTitle("Welcome to WACH - Where Anyone Can Hurt !");
         primaryStage.setScene(visu.preparerVisuel());
         primaryStage.setResizable(false);
+        TourManager tm = new TourManager();
+        tm.demarrer();
         primaryStage.show();
 
     }

@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -22,10 +23,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import processier.visu.VisuManager;
+import ressource.Randomier;
 import ressource.css.CSSier;
 import ressource.membre.Membrier;
 import ressource.tooltip.Tooltipier;
-import visuel.VisuManager;
 import chose.concept.Stat;
 import chose.perso.Membre;
 
@@ -35,7 +37,7 @@ import chose.perso.Membre;
  *
  * @author
  */
-public class Portrait extends StackPane {
+public class Portrait extends GridPane {
 
     /** SEP. */
     private static final String SEP = " : ";
@@ -46,6 +48,8 @@ public class Portrait extends StackPane {
     private GridPane            tabCombat;
     private GridPane            tabDyna;
     private List<Tab>           tabOthers;
+    private Pane                position;
+    private boolean             moving;
 
     /**
      * 
@@ -61,22 +65,20 @@ public class Portrait extends StackPane {
 
         GridPane grid = new GridPane();
         grid.setHgap(4);
-        // grid.setVgap(10);
         ColumnConstraints column2 = new ColumnConstraints(50);
         column2.setHalignment(HPos.CENTER);
         grid.getColumnConstraints().add(column2);
         grid.getColumnConstraints().add(new ColumnConstraints(60));
         grid.getColumnConstraints().add(new ColumnConstraints(60));
-        // grid.setPadding(new Insets(10, 0, 0, 0));
-        // grid.setGridLinesVisible(true);
-
         grid.setAlignment(Pos.CENTER);
         grid.add(tete, 1, 0, 1, 1);
         grid.getRowConstraints().add(new RowConstraints(20));
 
-        this.getChildren().addAll(getRectangle(), grid);
+        StackPane zoneTete = new StackPane();
+
+        zoneTete.getChildren().addAll(getRectangle(), grid);
         Portrait port = this;
-        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        zoneTete.setOnMouseClicked(new EventHandler<MouseEvent>() {
             /**
              * {@inheritDoc}
              */
@@ -90,13 +92,19 @@ public class Portrait extends StackPane {
         generatePaneCombat();
         generatePaneDyna();
         generatePaneInfo();
+
+        position = new Pane();
+        position.setMinWidth(Randomier.getRandom(0, 422));
+        GridPane.setConstraints(position, 0, 0);
+        GridPane.setConstraints(zoneTete, 1, 0);
+        this.getChildren().addAll(zoneTete, position);
     }
 
     /**
      * TODO : write the method's description
      */
     public Boolean deSelect() {
-        rect.getStyleClass().remove(CSSier.PORTRAITSEL);
+        rect.getStyleClass().remove(CSSier.PORTRAIT_SEL);
         return true;
     }
 
@@ -107,6 +115,19 @@ public class Portrait extends StackPane {
      */
     public Membre getMembre() {
         return membre;
+    }
+
+    /**
+     * Gets the moving.
+     *
+     * @return the moving.
+     */
+    public boolean getMoving() {
+        return moving;
+    }
+
+    public double getPos() {
+        return position.getMinWidth();
     }
 
     /**
@@ -158,6 +179,10 @@ public class Portrait extends StackPane {
         return tabOthers;
     }
 
+    public void movePos(final double newPos) {
+        position.setMinWidth(getPos() + newPos);
+    }
+
     /**
      * 
      */
@@ -165,9 +190,25 @@ public class Portrait extends StackPane {
         if (tabOthers == null)
             generatePaneOther();
 
-        if (!rect.getStyleClass().contains(CSSier.PORTRAITSEL)) {
-            rect.getStyleClass().add(CSSier.PORTRAITSEL);
+        if (!rect.getStyleClass().contains(CSSier.PORTRAIT_SEL) && !rect.getStyleClass().contains(CSSier.PORTRAIT_TOUR)) {
+            rect.getStyleClass().add(CSSier.PORTRAIT_SEL);
         }
+    }
+
+    /**
+     * Sets the moving.
+     *
+     * @param moving moving.
+     */
+    public void setMoving(final boolean moving) {
+        this.moving = moving;
+    }
+
+    /**
+     * 
+     */
+    public void tour() {
+        rect.getStyleClass().add(CSSier.PORTRAIT_TOUR);
     }
 
     /**

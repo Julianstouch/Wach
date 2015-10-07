@@ -13,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.PerspectiveTransform;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -30,7 +29,7 @@ import ressource.css.CSSier;
  *
  * @author
  */
-public class TourManager extends StackPane {
+public class Derouleur extends StackPane {
 
     Timeline   tlToRight;
     Timeline   tlToMid;
@@ -60,12 +59,12 @@ public class TourManager extends StackPane {
     /**
      * 
      */
-    public TourManager() {
+    public Derouleur() {
 
         started = false;
 
         listTour = new ArrayList<Text>();
-        Text debut = new Text("   Début    ");
+        Text debut = new Text("  Démarrer   ");
         Text eventG = new Text(" Evénement  ");
         Text evol = new Text(" Evolution  ");
         Text recur = new Text(" Récurrents ");
@@ -171,33 +170,6 @@ public class TourManager extends StackPane {
         KeyFrame kfb = new KeyFrame(duration, onFinishedB);
         tlToBye.getKeyFrames().add(kfb);
 
-        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(final MouseEvent event) {
-
-                if (!tlToBye.getStatus().equals(Status.RUNNING)) {
-                    if (pos == listTour.size() - 1) {
-                        initAll();
-                    } else {
-                        pos++;
-                        // hide all, sauf les 3 visible
-                        for (int i = 0; i < listTour.size(); i++) {
-                            if (i >= pos - 2 && i <= pos + 1) {
-                                listTour.get(i).setVisible(true);
-                            } else {
-                                listTour.get(i).setVisible(false);
-                            }
-                        }
-                        tlToRight.play();
-                        tlToMid.play();
-                        tlToLeft.play();
-                        tlToBye.play();
-                        executeEtape();
-                    }
-                }
-            }
-
-        });
-
         Rectangle rect = new Rectangle();
         rect.setX(-2);
         rect.setY(8);
@@ -219,6 +191,29 @@ public class TourManager extends StackPane {
         this.getChildren().addAll(gp);
     }
 
+    // Déroule l'étape du tour
+    public void deroule() {
+        if (!tlToBye.getStatus().equals(Status.RUNNING)) {
+            if (pos == listTour.size() - 1) {
+                initAll();
+            } else {
+                pos++;
+                // hide all, sauf les 3 visible
+                for (int i = 0; i < listTour.size(); i++) {
+                    if (i >= pos - 2 && i <= pos + 1) {
+                        listTour.get(i).setVisible(true);
+                    } else {
+                        listTour.get(i).setVisible(false);
+                    }
+                }
+                tlToRight.play();
+                tlToMid.play();
+                tlToLeft.play();
+                tlToBye.play();
+            }
+        }
+    }
+
     /**
      * Gets the widthMid.
      *
@@ -226,11 +221,6 @@ public class TourManager extends StackPane {
      */
     public double getWidthMid() {
         return widthMid;
-    }
-
-    private void executeEtape() {
-        // TODO Auto-generated method stub
-
     }
 
     /**

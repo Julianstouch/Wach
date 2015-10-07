@@ -1,4 +1,4 @@
-package visuel;
+package processier.visu;
 
 
 import javafx.event.EventHandler;
@@ -8,13 +8,14 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import processier.action.Deplacement;
 import ressource.membre.Membrier;
-import ressource.membre.Portrier;
 import visuel.perso.Portrait;
 import visuel.ui.Bandeau;
 import visuel.ui.BarAction;
 import visuel.ui.Buff;
 import visuel.ui.Cadre;
+import chose.perso.Membre;
 
 
 /**
@@ -49,15 +50,15 @@ public class VisuManager {
     public void afficherEquipe(final int camp) {
 
         for (int i = 0; i < 5; i++) {
-            GridPane memP = new GridPane();
-            // memP.setGridLinesVisible(true);
-            cadre.ajoutMembre(memP, camp);
 
-            GridPane.setConstraints(memP, 0, i);
+            Membre unMembre = Membrier.getInstance().getNouveauMembre(camp);
+            Portrait pMem = unMembre.getSonPortrait();
+
+            GridPane.setConstraints(pMem, 0, i);
             if (camp == 1) {
-                gPaneL.getChildren().add(memP);
+                gPaneL.getChildren().add(pMem);
             } else {
-                gPaneR.getChildren().add(memP);
+                gPaneR.getChildren().add(pMem);
             }
         }
 
@@ -92,7 +93,7 @@ public class VisuManager {
             @Override
             public void handle(final MouseEvent event) {
                 event.consume();
-                gererSelection(null);
+                showStat(null);
             }
         });
 
@@ -103,8 +104,9 @@ public class VisuManager {
     }
 
     public void showStat(final Portrait portrait) {
-        this.gererSelection(portrait);
-        band.afficherStats(portrait);
+        Portrait current = portrait != null ? portrait : Membrier.getInstance().getMembre(1).getSonPortrait();
+        this.gererSelection(current);
+        band.afficherStats(current);
     }
 
     /**
@@ -113,14 +115,11 @@ public class VisuManager {
      * @param portrait
      */
     private void gererSelection(final Portrait portrait) {
-        if (portrait != null) {
-            for (Portrait autre : Portrier.getInstance().getAllPortraitBut(portrait)) {
-                autre.deSelect();
-            }
-            portrait.select();
-        } else {
-            Portrier.getInstance().getAllPortrait().stream().forEach(e -> e.deSelect());
-            band.cacherStats();
+        Membrier.getInstance().getAllPortrait().forEach(e -> e.deSelect());
+        portrait.select();
+        if (!portrait.getMoving()) {
+            new Deplacement().move(portrait);
         }
+
     }
 }

@@ -9,9 +9,21 @@
     -fx-stroke-width: 3;
 }
 
-.portraitselected {
+.portraittour {
     -fx-fill: white;
     -fx-stroke: #15d234;
+    -fx-stroke-width: 3;
+}
+
+.portraitselected {
+    -fx-fill: white;
+    -fx-stroke: #ecf329;
+    -fx-stroke-width: 3;
+}
+
+.portraitcible {
+    -fx-fill: white;
+    -fx-stroke: #e32828;
     -fx-stroke-width: 3;
 }
 

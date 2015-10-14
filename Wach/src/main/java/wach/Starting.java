@@ -3,7 +3,7 @@ package wach;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import processier.tour.TourManager;
+import processier.deroul.tour.TourManager;
 import processier.visu.VisuManager;
 
 

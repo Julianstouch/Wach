@@ -40,8 +40,12 @@ public abstract class AbsFormule extends Randomier implements Formule {
         return getMaxValue();
     }
 
+    /**
+     * public Ponderateur getPon() { return new Ponderateur(); }
+     */
+
     public Ponderateur getPon() {
-        return new Ponderateur();
+        return new Ponderateur(getProprio(), this);
     }
 
     public Membre getProprio() {

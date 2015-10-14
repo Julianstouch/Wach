@@ -18,7 +18,7 @@ public class FSCRap extends FSCombat {
      */
     @Override
     protected Integer prepareInitValue() {
-        return getPon().p(50, 1).p(getS(EStat.SOU), 0).p(getS(EStat.SAN), 0).total();
+        return getPon().p(50, 1).p(EStat.SOU, 0).p(EStat.SAN, 0).total();
     }
 
     /**

@@ -1,4 +1,4 @@
-package processier.tour;
+package processier.deroul.tour;
 
 
 import ressource.membre.Membrier;

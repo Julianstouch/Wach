@@ -18,7 +18,7 @@ public class FSCCap extends FSCombat {
      */
     @Override
     protected Integer prepareInitValue() {
-        return getPon().p(getS(EStat.FOR), 2).p(getS(EStat.END), 3).p(getS(EStat.SAN), 4).total(4) + getRandomSC();
+        return getPon().p(EStat.FOR, 2).p(EStat.END, 3).p(EStat.SAN, 4).total(8) + getRandomSC();
     }
 
     /**

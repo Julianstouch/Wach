@@ -18,7 +18,7 @@ public class FSDPsy extends FSDyna {
      */
     @Override
     protected Integer prepareInitValue() {
-        return getPon().p(getS(EStat.INT) * 2, 1).p(getS(EStat.MEN) * 2, 1).total() + getRandomSC();
+        return getPon().p(EStat.INT, 2, 1).p(EStat.MEN, 2, 0).total() + getRandomSC();
     }
 
     /**

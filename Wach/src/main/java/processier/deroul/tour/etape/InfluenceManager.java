@@ -1,4 +1,4 @@
-package processier.tour.etape;
+package processier.deroul.tour.etape;
 
 
 /**
@@ -6,6 +6,6 @@ package processier.tour.etape;
  *
  * @author
  */
-public class RegenManager {
+public class InfluenceManager {
 
 }

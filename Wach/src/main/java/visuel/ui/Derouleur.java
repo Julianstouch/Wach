@@ -41,21 +41,25 @@ public class Derouleur extends StackPane {
     double     widthMid;
     boolean    started;
 
-    // // général
-    // Event général : météo, crs, chutte d'objet, pompier et jet d'eau
-    // Evolution de l'environnement
-    // Application des récurrents et effets
-    // Conséquence sur les membres
-    // // perso dont c'est le tour
-    // Mise à jour des stats du perso : regen
+    // Démarrage d'un roud :
     //
-    // -> Attente de l'action du perso : au clic ou action auto
+    // R : Event roud : météo, crs, chutte d'objet, pompier et jet d'eau
+    // R : Evolution de l'environnement
+    // R : Application des récurrents et effets
+    // R : Conséquence sur les membres
+    // R : Boucle sur le perso dont c'est le tour (par initiative) :
     //
-    // // exécution de l'action
-    // Event d'action : event d'action générique + suivant le type d'action
-    // Influence sur l'action par les facteurs
-    // Impact de l'action
-    // Conséquence de l'action
+    // T : Mise à jour des stats du perso : regen
+    // T : -> Attente de l'action du perso : au clic ou action auto
+    // T : exécution de l'action
+    // T : Event d'action : event d'action générique + suivant le type d'action
+    // T : Influence sur l'action par les facteurs
+    // T : Impact de l'action
+    // T : Conséquence de l'action
+    //
+    // R : Next perso
+    // R : Fin du round
+
     /**
      * 
      */
@@ -69,6 +73,7 @@ public class Derouleur extends StackPane {
         Text evol = new Text(" Evolution  ");
         Text recur = new Text(" Récurrents ");
         Text conseqG = new Text("Conséquences");
+
         Text regen = new Text("Régénération");
         Text action = new Text("   Action   ");
         Text eventA = new Text(" Evénement  ");

@@ -18,7 +18,7 @@ public class FSCEqu extends FSCombat {
      */
     @Override
     protected Integer prepareInitValue() {
-        return getPon().p(25, 4).p(getS(EStat.SOU), 1).p(getS(EStat.END), 1).total(4) + getRandomSC();
+        return getPon().p(25, 4).p(EStat.SOU, 1).p(EStat.END, 1).total(5) + getRandomSC();
     }
 
     /**

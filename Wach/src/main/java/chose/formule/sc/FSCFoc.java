@@ -18,7 +18,7 @@ public class FSCFoc extends FSCombat {
      */
     @Override
     protected Integer prepareInitValue() {
-        return getPon().p(getS(EStat.MEN), 5).p(getS(EStat.SAN), 3).m(getS(EStat.FOR), 1).total(4) + getRandomSC();
+        return getPon().p(EStat.MEN, 5).p(EStat.SAN, 3).m(EStat.FOR, 1).total(7) + getRandomSC();
     }
 
     /**

@@ -209,6 +209,7 @@ public class Portrait extends GridPane {
      */
     public void tour() {
         rect.getStyleClass().add(CSSier.PORTRAIT_TOUR);
+        VisuManager.getInstance().showStat(this);
     }
 
     /**

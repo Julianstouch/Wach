@@ -18,7 +18,7 @@ public class FSCAss extends FSCombat {
      */
     @Override
     protected Integer prepareInitValue() {
-        return getPon().p(getS(EStat.MEN), 3).p(getS(EStat.FOR), 3).p(getS(EStat.END), 1).total(4) + getRandomSC();
+        return getPon().p(EStat.MEN, 3).p(EStat.FOR, 3).p(EStat.END, 1).total(8);
     }
 
     /**

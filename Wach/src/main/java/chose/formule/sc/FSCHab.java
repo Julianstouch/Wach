@@ -18,9 +18,7 @@ public class FSCHab extends FSCombat {
      */
     @Override
     protected Integer prepareInitValue() {
-        return getPon().p(getS(EStat.END), 1).p(getS(EStat.SOU), 2).p(getS(EStat.INT), 1).p(getS(EStat.SAN), 1)
-                .total(4)
-                + getRandomSC();
+        return getPon().p(EStat.END, 1).p(EStat.SOU, 2).p(EStat.INT, 1).p(EStat.SAN, 1).total(6) + getRandomSC();
     }
 
     /**

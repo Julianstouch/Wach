@@ -18,7 +18,7 @@ public class FSDNrj extends FSDyna {
      */
     @Override
     protected Integer prepareInitValue() {
-        return getPon().p(getS(EStat.END), 1).total(3) + getRandomSC();
+        return getPon().p(EStat.END, 1).total(4) + getRandomSC();
     }
 
     /**
